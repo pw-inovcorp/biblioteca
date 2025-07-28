@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Hello World!</h1>
-</body>
-</html>
+<x-guest-layout>
+    <h1 class="text-3xl font-bold text-center mt-6">Bem-vindo à Biblioteca</h1>
+    <p>Consulta livros, autores e editoras de forma prática.</p>
+
+    <nav>
+        <a href="/livros" class="text-blue-600 underline">Livros</a>
+        <a href="/autores" class="text-blue-600 underline">Autores</a>
+        <a href="/editoras" class="text-blue-600 underline">Editoras</a>
+    </nav>
+</x-guest-layout>
