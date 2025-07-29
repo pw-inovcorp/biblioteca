@@ -18,6 +18,12 @@ class LivroFactory extends Factory
     {
         return [
             //
+            'isbn' => $this->faker->unique()->isbn13(),
+            'name' => $this->faker->sentence(3),
+            'editor_id' => \App\Models\Editor::factory(),
+            'bibliography' => $this->faker->paragraph(),
+            'image' => 'https://picsum.photos/640/480?random=' . rand(1, 1000),
+            'price' => $this->faker->numberBetween(10, 151)
         ];
     }
 }

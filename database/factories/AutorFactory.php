@@ -18,6 +18,8 @@ class AutorFactory extends Factory
     {
         return [
             //
+            'name' => $this->faker->name(),
+            'foto' => 'https://picsum.photos/640/480?random=' . rand(1, 1000)
         ];
     }
 }

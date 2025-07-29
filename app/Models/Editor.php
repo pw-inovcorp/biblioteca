@@ -9,4 +9,12 @@ class Editor extends Model
 {
     /** @use HasFactory<\Database\Factories\EditorFactory> */
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'logotipo'
+    ];
+    public function livros()
+    {
+        return $this->hasMany(Livro::class);
+    }
 }

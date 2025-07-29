@@ -18,6 +18,8 @@ class EditorFactory extends Factory
     {
         return [
             //
+            'name' => $this->faker->company(),
+            'logotipo' => 'https://picsum.photos/640/480?random=' . rand(1, 1000)
         ];
     }
 }

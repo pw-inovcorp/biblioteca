@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Livro;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,15 +9,18 @@ Route::get('/', function () {
 
 
 Route::get('/livros', function () {
-    return view('livros');
+    $livros = Livro::with('editor')->get();
+    return view('livros', ['livros' => $livros]);
 });
 
 Route::get('/editoras', function () {
-    return view('editoras');
+    $editoras = \App\Models\Editor::all();
+    return view('editoras', ['editoras' => $editoras]);
 });
 
 Route::get('/autores', function () {
-    return view('autores');
+    $autores = \App\Models\Autor::all();
+    return view('autores', ['autores' => $autores]);
 });
 
 Route::middleware([
