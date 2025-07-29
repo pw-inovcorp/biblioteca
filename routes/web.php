@@ -9,17 +9,17 @@ Route::get('/', function () {
 
 
 Route::get('/livros', function () {
-    $livros = Livro::with('editor')->get();
+    $livros = Livro::with('editor')->simplePaginate(6);
     return view('livros', ['livros' => $livros]);
 });
 
 Route::get('/editoras', function () {
-    $editoras = \App\Models\Editor::all();
+    $editoras = \App\Models\Editor::paginate(6);
     return view('editoras', ['editoras' => $editoras]);
 });
 
 Route::get('/autores', function () {
-    $autores = \App\Models\Autor::all();
+    $autores = \App\Models\Autor::simplePaginate(6);
     return view('autores', ['autores' => $autores]);
 });
 
