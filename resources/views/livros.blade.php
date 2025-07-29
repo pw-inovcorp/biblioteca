@@ -1,6 +1,6 @@
-<x-guest-layout>
+<x-app-layout>
     <x-slot:heading>
         Livro Page
     </x-slot:heading>
     <h1 class="text-3xl font-bold text-center mt-6">Hello from Livro Page</h1>
-</x-guest-layout>
+</x-app-layout>

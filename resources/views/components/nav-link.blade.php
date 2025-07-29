@@ -1,4 +1,4 @@
-{{-- @props(['active'])
+@props(['active'])
 
 @php
 $classes = ($active ?? false)
@@ -8,11 +8,11 @@ $classes = ($active ?? false)
 
 <a {{ $attributes->merge(['class' => $classes]) }}>
     {{ $slot }}
-</a> --}}
+</a>
 
-@props(['active' => false])
+{{-- @props(['active' => false])
 
 <a aria-current="page" class="{{ $active ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium"
     {{ $attributes }}>
     {{ $slot }}
-</a>
+</a> --}}

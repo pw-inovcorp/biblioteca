@@ -8,15 +8,15 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        {{-- <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" /> --}}
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-        <script src="https://cdn.tailwindcss.com"></script>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 
         <!-- Styles -->
-        {{-- @livewireStyles --}}
+        @livewireStyles
     </head>
     <body class = "min-h-full">
 
@@ -30,7 +30,7 @@
         <body class="h-full">
         ```
         -->
-        <div class="min-h-full">
+        {{-- <div class="min-h-full">
         <nav class="bg-gray-800">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
@@ -102,11 +102,11 @@
             <div class="border-t border-gray-700 pt-4 pb-3">
                 <div class="flex items-center px-5">
                 <div class="shrink-0">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="size-10 rounded-full" />
+                    <img src="{{ asset('img/08.jpg') }}" alt="" class="size-10 rounded-full" />
                 </div>
                 <div class="ml-3">
-                    <div class="text-base/5 font-medium text-white">Tom Cook</div>
-                    <div class="text-sm font-medium text-gray-400">tom@example.com</div>
+                    <div class="text-base/5 font-medium text-white">Pedro Wang</div>
+                    <div class="text-sm font-medium text-gray-400">pre7758@hotmail.com</div>
                 </div>
                 <button type="button" class="relative ml-auto shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
                     <span class="absolute -inset-1.5"></span>
@@ -131,13 +131,13 @@
             </div>
         </header>
         <main>
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8"> --}}
             <!-- Your content -->
                 <div class="font-sans text-gray-900 antialiased">
                     {{ $slot }}
                 </div>
 
-                {{-- @livewireScripts --}}
+                @livewireScripts
             </div>
         </main>
         </div>
