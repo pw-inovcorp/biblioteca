@@ -26,6 +26,7 @@
                         <tr>
                             <td class="p-2 border">{{ $livro->isbn }}</td>
                             <td class="p-2 border">{{ $livro->name }}</td>
+                            {{-- <!--<td class="p-2 border">{{ $livro->author->name }}</td>--> --}}
                             <td class="p-2 border">{{ $livro->editor->name }}</td>
                             <td class="p-2 border">{{ $livro->bibliography }}</td>
                             <td class="p-2 border text-center">
