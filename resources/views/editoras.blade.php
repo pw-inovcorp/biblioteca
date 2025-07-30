@@ -1,10 +1,11 @@
 <x-app-layout>
-    <x-slot:heading>
-        Livro Page
-    </x-slot:heading>
+
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Editoras') }}
+        </h2>
+    </x-slot>
     
-
-
     <div class="space-y-6 flex flex-col items-center mt-6">
         @foreach ($editoras as $editora)
             <div class="rounded-lg p-4 w-64 text-center">

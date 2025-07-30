@@ -1,8 +1,11 @@
 <x-app-layout>
-    <x-slot:heading>
-        Livro Page
-    </x-slot:heading>
 
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Livros') }}
+        </h2>
+    </x-slot>
+    
     <h1 class="text-2xl font-semibold text-center mt-6">Lista de Livros</h1>
 
     <div class="w-full max-w-7xl mx-auto px-4 mt-6">
@@ -35,7 +38,7 @@
             </table>
         </div>
         <div class="mt-6">
-        {{ $livros->links() }}
+            {{ $livros->links() }}
         </div>
     </div>
 </x-app-layout>
