@@ -5,12 +5,24 @@
             {{ __('Editoras') }}
         </h2>
     </x-slot>
+
+    <x-slot:action>
+        <x-button-crud href="/editoras/create">Crear Editora</x-button-crud>
+    </x-slot:action>
+
     
     <div class="space-y-6 flex flex-col items-center mt-6">
         @foreach ($editoras as $editora)
+
+            @php
+                $isUrl = str_starts_with($editora->logotipo, 'http');
+            @endphp
+
             <div class="rounded-lg p-4 w-64 text-center">
                 <h2 class="text-xl font-bold">{{ $editora->name }}</h2>
-                <img src="{{ $editora->logotipo }}" alt="{{ $editora->name }}" class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;">
+                <img src="{{ $isUrl ? $editora->logotipo : asset('storage/' . $editora->logotipo) }}" alt="{{ $editora->name }}"
+                    class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;"
+                />
             </div>
         @endforeach
     </div>

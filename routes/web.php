@@ -15,8 +15,29 @@ Route::get('/livros', function () {
 
 Route::get('/editoras', function () {
     $editoras = \App\Models\Editor::paginate(6);
-    return view('editoras', ['editoras' => $editoras]);
+    return view('editoras/index', ['editoras' => $editoras]);
 });
+
+Route::get('/editoras/create', function () {
+    return view('editoras/create');
+});
+
+Route::post('/editoras', function () {
+    $data = request()->validate([
+        'name' => 'required|string|max:255|min:3',
+        'logotipo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    // Handle the logo upload
+    if (request()->hasFile('logotipo')) {
+        $data['logotipo'] = request()->file('logotipo')->store('editoras', 'public');
+    }
+
+    \App\Models\Editor::create($data);
+
+    return redirect('/editoras');
+});
+
 
 Route::get('/autores', function () {
     $autores = \App\Models\Autor::simplePaginate(6);
