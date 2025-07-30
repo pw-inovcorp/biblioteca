@@ -9,6 +9,7 @@ class Autor extends Model
 {
     /** @use HasFactory<\Database\Factories\AutorFactory> */
     use HasFactory;
+    protected $table = 'autores';
     protected $fillable = [
         'name',
         'foto'

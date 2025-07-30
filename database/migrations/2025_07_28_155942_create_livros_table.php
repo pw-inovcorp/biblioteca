@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Editor::class);
             $table->string('bibliography');
             $table->string('image')->nullable();
-            $table->integer('price');
+            $table->decimal('price', 8, 2)->nullable();
             $table->timestamps();
         });
     }

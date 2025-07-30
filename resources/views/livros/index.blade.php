@@ -5,6 +5,10 @@
             {{ __('Livros') }}
         </h2>
     </x-slot>
+
+    <x-slot:action>
+        <x-button-crud href="/livros/create">Criar Livro</x-button-crud> 
+    </x-slot:action>
     
     <h1 class="text-2xl font-semibold text-center mt-6">Lista de Livros</h1>
 
@@ -16,6 +20,7 @@
                         <th class="p-2 border text-left">ISBN</th>
                         <th class="p-2 border text-left">Nome</th>
                         <th class="p-2 border text-left">Editora</th>
+                        <th class="p-2 border text-left">Autor(es)</th>
                         <th class="p-2 border text-left">Bibliografia</th>
                         <th class="p-2 border text-center">Imagem</th>
                         <th class="p-2 border text-right">Preço</th>
@@ -26,7 +31,11 @@
                         <tr>
                             <td class="p-2 border">{{ $livro->isbn }}</td>
                             <td class="p-2 border">{{ $livro->name }}</td>
-                            {{-- <!--<td class="p-2 border">{{ $livro->author->name }}</td>--> --}}
+                            <td class="p-2 border">
+                                @foreach ($livro->autores as $autor)
+                                    <span class="block">{{ $autor->name }}</span>
+                                @endforeach
+                            </td>
                             <td class="p-2 border">{{ $livro->editor->name }}</td>
                             <td class="p-2 border">{{ $livro->bibliography }}</td>
                             <td class="p-2 border text-center">
