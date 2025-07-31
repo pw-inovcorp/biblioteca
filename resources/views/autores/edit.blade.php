@@ -70,7 +70,8 @@
         
     </form>
 
-    <form action="/autores/{{ $autor->id }}" method="POST" id="delete-editor-form" class="hidden">
+    <form action="/autores/{{ $autor->id }}" method="POST" id="delete-editor-form" class="hidden"
+        onsubmit="return confirm('Tens a certeza que queres apagar este autor?');">
         @csrf
         @method('DELETE')
     </form>

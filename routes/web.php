@@ -1,27 +1,51 @@
 <?php
 
+use App\Http\Controllers\EditorController;
+use App\Models\Editor;
 use App\Models\Livro;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AutorController;
+use Illuminate\Validation\Rule;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
-
+//Index
 Route::get('/livros', function () {
     $livros = Livro::with('editor','autores')->simplePaginate(6);
     return view('livros/index', ['livros' => $livros]);
 });
 
+//Create
 Route::get('/livros/create', function () {
     $editoras = \App\Models\Editor::orderBy('name')->get();
     $autores = \App\Models\Autor::orderBy('name')->get();
     return view('livros/create', ['editoras' => $editoras, 'autores' => $autores]);
 });
 
+//Store
 Route::post('/livros', function () {
+    
+});
+
+//Edit 
+Route::get('/livros/{id}/edit', function ($id) {
+    $livro = Livro::with('editor', 'autores')->findOrFail($id);
+    $editoras = Editor::orderBy('name')->get();
+    $autores = \App\Models\Autor::orderBy('name')->get();
+    return view('livros/edit', ['livro' => $livro, 'editoras' => $editoras, 'autores' => $autores]);
+});
+
+//Update
+Route::patch('/livros/{id}', function ($id) {
+
+    // Search
+    $livro = Livro::findOrFail($id);
+
+    //Validate
     $data = request()->validate([
-        'isbn' => 'required|string|max:255|unique:livros',
+        'isbn' => 'required|string|max:255',Rule::unique('livros', 'isbn')->ignore($livro->id),
         'name' => 'required|string|max:255|min:3',
         'editor_id' => 'required|exists:editors,id',
         'autores' => 'required|array',
@@ -34,162 +58,59 @@ Route::post('/livros', function () {
     // Handle the image upload
     if (request()->hasFile('image')) {
         $data['image'] = request()->file('image')->store('livros', 'public');
+    } else {
+        // Retain the existing image if no new file is uploaded
+        unset($data['image']);
     }
 
-    \App\Models\Livro::create($data);
+    $livro->update($data);
 
     return redirect('/livros');
 });
 
-//Index
-Route::get('/editoras', function () {
-    $editoras = \App\Models\Editor::paginate(6);
-    return view('editoras/index', ['editoras' => $editoras]);
-});
+//Destroy
+Route::delete('/livros/{id}', function ($id) {
+    $livro = \App\Models\Livro::findOrFail($id);
+    $livro->delete();
 
-//Create
-Route::get('/editoras/create', function () {
-    return view('editoras/create');
-});
-
-//Store
-Route::post('/editoras', function () {
-    $data = request()->validate([
-        'name' => 'required|string|max:255|min:3',
-        'logotipo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-
-    // Handle the logo upload
-    if (request()->hasFile('logotipo')) {
-        $data['logotipo'] = request()->file('logotipo')->store('editoras', 'public');
-    }
-
-    \App\Models\Editor::create($data);
-
-    return redirect('/editoras');
-});
-
-//Edit
-Route::get('/editoras/{id}/edit', function ($id) {
-
-     $editora = \App\Models\Editor::findOrFail($id);
-
-    return view('editoras/edit', ['editora' => $editora]);
-});
-
-//Update
-Route::patch('/editoras/{id}', function ($id) {
-    // Validation
-    $data = request()->validate([
-        'name' => 'required|string|max:255|min:3',
-        'logotipo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-
-    // Serch
-    $editora = \App\Models\Editor::findOrFail($id);
-
-    // Handle the logo upload
-    if (request()->hasFile('logotipo')) {
-        $data['logotipo'] = request()->file('logotipo')->store('editoras', 'public');
-    } else {
-        // Retain the existing logo if no new file is uploaded
-        unset($data['logotipo']);
-    }
-
-    // Update
-    $editora->update($data);
-
-    // Redirect
-    return redirect('/editoras');
-});
-
-//Delete
-Route::delete('/editoras/{id}', function ($id) {
-
-    // Find the editor by ID
-    $editora = \App\Models\Editor::findOrFail($id);
-
-    // Check if the editor has associated books
-
-    // Delete the editor
-    $editora->delete();
-
-    // Redirect back to the editoras
-    return redirect('/editoras');
+    return redirect('/livros');
 });
 
 
-//Index
-Route::get('/autores', function () {
-    $autores = \App\Models\Autor::simplePaginate(6);
-    return view('autores/index', ['autores' => $autores]);
+
+
+Route::controller(EditorController::class)->group(function () {
+    //Index
+    Route::get('/editoras', 'index');
+    //Create
+    Route::get('/editoras/create', 'create');
+    //Store
+    Route::post('/editoras', 'store');
+    //Edit
+    Route::get('/editoras/{id}/edit', 'edit');
+    //Update
+    Route::patch('/editoras/{id}', 'update');
+    //Destroy
+    Route::delete('/editoras/{id}', 'destroy');
+
 });
 
-//Create
-Route::get('/autores/create', function () {
-    return view('autores/create');
+
+Route::controller(AutorController::class)->group(function () {
+    //Index
+    Route::get('/autores', 'index');
+    //Create
+    Route::get('/autores/create', 'create');
+    //Store
+    Route::post('/autores', 'store');
+    //Edit
+    Route::get('/autores/{id}/edit', 'edit');
+    //Update
+    Route::patch('/autores/{id}', 'update');
+    //Destroy
+    Route::delete('/autores/{id}', 'destroy');
 });
 
-//Store
-Route::post('/autores', function () {
-    $data = request()->validate([
-        'name' => 'required|string|max:255|min:3',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-
-    // Handle the photo upload
-    if (request()->hasFile('foto')) {
-        $data['foto'] = request()->file('foto')->store('autores', 'public');
-    }
-
-    \App\Models\Autor::create($data);
-
-    return redirect('/autores');
-});
-
-// Edit
-Route::get('/autores/{id}/edit', function ($id) {
-    $autor = \App\Models\Autor::findOrFail($id);
-    return view('autores/edit', ['autor' => $autor]);
-});
-
-// Update
-Route::patch('/autores/{id}', function ($id) {
-    // Validation
-    $data = request()->validate([
-        'name' => 'required|string|max:255|min:3',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-    // Search
-    $autor = \App\Models\Autor::findOrFail($id);
-
-    // Handle the photo upload
-    if (request()->hasFile('foto')) {
-        $data['foto'] = request()->file('foto')->store('autores', 'public');
-    } else {
-        // Retain the existing photo if no new file is uploaded
-        unset($data['foto']);
-    }
-
-    // Update
-    $autor->update($data);
-
-    // Redirect
-    return redirect('/autores');
-});
-
-// Delete
-Route::delete('/autores/{id}', function ($id) {
-    // Find the author by ID
-    $autor = \App\Models\Autor::findOrFail($id);
-    
-    // Check if the author has associated books
-
-    // Delete the author
-    $autor->delete();
-    // Redirect back to the authors
-    return redirect('/autores');
-});
 
 Route::middleware([
     'auth:sanctum',

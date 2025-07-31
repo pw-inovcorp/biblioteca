@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class AutorController extends Controller
+{
+    //
+    public function index()
+    {
+        $autores = \App\Models\Autor::paginate(6);
+        return view('autores/index', ['autores' => $autores]);
+    }
+
+    public function create() {
+        return view('autores/create');
+    }
+
+    public function store()
+    {
+        $data = request()->validate([
+            'name' => 'required|string|max:255|min:3',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Handle the photo upload
+        if (request()->hasFile('foto')) {
+            $data['foto'] = request()->file('foto')->store('autores', 'public');
+        }
+
+        \App\Models\Autor::create($data);
+
+        return redirect('/autores');
+    }
+
+    public function edit($id)
+    {
+        $autor = \App\Models\Autor::findOrFail($id);
+        return view('autores/edit', ['autor' => $autor]);
+    }
+
+    public function update($id)
+    {
+        $data = request()->validate([
+            'name' => 'required|string|max:255|min:3',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Search
+        $autor = \App\Models\Autor::findOrFail($id);
+
+        // Handle the photo upload
+        if (request()->hasFile('foto')) {
+            $data['foto'] = request()->file('foto')->store('autores', 'public');
+        } else {
+            // Retain the existing photo if no new file is uploaded
+            unset($data['foto']);
+        }
+
+        $autor->update($data);
+
+        return redirect('/autores');
+    }
+
+    public function destroy($id)
+    {
+        $autor = \App\Models\Autor::findOrFail($id);
+        $autor->delete();
+
+        return redirect('/autores');
+    }
+}

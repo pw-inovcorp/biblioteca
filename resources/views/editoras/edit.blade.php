@@ -70,7 +70,8 @@
         
     </form>
 
-    <form action="/editoras/{{ $editora->id }}" method="POST" id="delete-editor-form" class="hidden">
+    <form action="/editoras/{{ $editora->id }}" method="POST" id="delete-editor-form" class="hidden"
+        onsubmit="return confirm('Tens a certeza que queres apagar esta editora?');">
         @csrf
         @method('DELETE')
     </form>

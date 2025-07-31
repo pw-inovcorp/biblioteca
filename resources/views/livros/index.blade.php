@@ -21,11 +21,12 @@
                     <tr>
                         <th class="p-2 border text-left">ISBN</th>
                         <th class="p-2 border text-left">Nome</th>
-                        <th class="p-2 border text-left">Editora</th>
                         <th class="p-2 border text-left">Autor(es)</th>
+                        <th class="p-2 border text-left">Editora</th>
                         <th class="p-2 border text-left">Bibliografia</th>
                         <th class="p-2 border text-center">Imagem</th>
                         <th class="p-2 border text-right">Preço</th>
+                        <th class="p-2 border text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,13 +34,17 @@
                         @php
                             $isUrl = str_starts_with($livro->image, 'http');
                         @endphp
-                       <tr>
+                        <tr>
                             <td class="p-2 border">{{ $livro->isbn }}</td>
                             <td class="p-2 border">{{ $livro->name }}</td>
                             <td class="p-2 border">
-                                @foreach ($livro->autores as $autor)
-                                <span class="block">{{ $autor->name }}</span>
-                                @endforeach
+                                @if($livro->autores->isNotEmpty())
+                                    @foreach ($livro->autores as $autor)
+                                        <span class="block">{{ $autor->name }}</span>
+                                    @endforeach
+                                @else
+                                    <span class="italic text-gray-500">Sem autores</span>
+                                @endif
                             </td>
                             <td class="p-2 border">
                                 {{ $livro->editor?->name ?? 'Sem editora' }}
@@ -50,6 +55,7 @@
                                     class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;" />
                             </td>
                             <td class="p-2 border text-right">€ {{ $livro->price }}</td>
+                            <td> <a href="/livros/{{ $livro->id }}/edit" class="p-2 text-gray-400 font-bold" type="button">Editar</a></td>
                         </tr>
                     @endforeach
                 </tbody>
