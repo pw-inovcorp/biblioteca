@@ -7,7 +7,7 @@
     </x-slot>
 
     <x-slot:action>
-        <x-button-crud href="/editoras/create">Crear Editora</x-button-crud>
+        <x-button-crud href="/editoras/create">Criar Editora</x-button-crud>
     </x-slot:action>
 
     
@@ -23,11 +23,26 @@
                 <img src="{{ $isUrl ? $editora->logotipo : asset('storage/' . $editora->logotipo) }}" alt="{{ $editora->name }}"
                     class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;"
                 />
+                <div class="mt-4 flex justify-center items-center gap-4">
+                    <x-button-crud href="/editoras/{{ $editora->id }}/edit">Editar</x-button-crud>
+                </div>
             </div>
+
+            {{-- //Actions
+            <div class="my-6 max-w-3xl mx-auto px-4 flex gap-4 items-center">
+                <x-button-crud href="/editoras/{{ $editora->id }}/edit">Editar</x-button-crud>
+                <a href="/editoras/{{ $editora->id }}/delete" class="text-red-500 text-sm">Eliminar</a>
+            </div> --}}
         @endforeach
     </div>
+
 
     <div class="my-6 max-w-3xl mx-auto px-4">
         {{ $editoras->links() }}
     </div>
+
+    {{-- <form action="/editoras/{{ $editora->id }}" method="POST" id="delete-editor-form" class="hidden">
+        @csrf
+        @method('DELETE')
+    </form> --}}
 </x-app-layout>

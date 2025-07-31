@@ -33,20 +33,21 @@
                         @php
                             $isUrl = str_starts_with($livro->image, 'http');
                         @endphp
-                        <tr>
+                       <tr>
                             <td class="p-2 border">{{ $livro->isbn }}</td>
                             <td class="p-2 border">{{ $livro->name }}</td>
                             <td class="p-2 border">
                                 @foreach ($livro->autores as $autor)
-                                    <span class="block">{{ $autor->name }}</span>
+                                <span class="block">{{ $autor->name }}</span>
                                 @endforeach
                             </td>
-                            <td class="p-2 border">{{ $livro->editor->name }}</td>
+                            <td class="p-2 border">
+                                {{ $livro->editor?->name ?? 'Sem editora' }}
+                            </td>
                             <td class="p-2 border">{{ $livro->bibliography }}</td>
                             <td class="p-2 border text-center">
-                               <img src="{{ $isUrl ? $livro->image : asset('storage/' . $livro->image) }}" alt="{{ $livro->name }}"
-                                    class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;"
-                                />
+                                <img src="{{ $isUrl ? $livro->image : asset('storage/' . $livro->image) }}" alt="{{ $livro->name }}"
+                                    class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;" />
                             </td>
                             <td class="p-2 border text-right">€ {{ $livro->price }}</td>
                         </tr>

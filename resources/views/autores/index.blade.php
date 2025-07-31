@@ -21,7 +21,11 @@
                 <img src="{{ $isUrl ? $autor->foto : asset('storage/' . $autor->foto) }}" alt="{{ $autor->name }}"
                     class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;"
                 />
+                <div class="mt-4 flex justify-center items-center gap-4">
+                    <x-button-crud href="/autores/{{ $autor->id }}/edit">Editar</x-button-crud>
+                </div>
             </div>
+
         @endforeach
         <div class="mt-4">
             {{ $autores->links() }}
