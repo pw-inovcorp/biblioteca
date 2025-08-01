@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Editor;
 
 class EditorController extends Controller
 {
@@ -79,5 +80,15 @@ class EditorController extends Controller
 
         // Redirect back to the editoras
         return redirect('/editoras');
+    }
+
+    public function search() {
+        $search = request()->query('search','');
+        $editoras = Editor::where('name', 'LIKE', "%{$search}%")
+        ->orderBy('name')
+        ->paginate(6)
+        ->withQueryString();
+
+        return view('editoras/index', compact('editoras', 'search'));
     }
 }

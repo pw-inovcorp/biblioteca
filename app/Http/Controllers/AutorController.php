@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Autor;
 
 class AutorController extends Controller
 {
@@ -69,5 +70,16 @@ class AutorController extends Controller
         $autor->delete();
 
         return redirect('/autores');
+    }
+
+    //Search
+    public function search() {
+        $search = request()->query('search','');
+        $autores = Autor::where('name', 'LIKE', "%{$search}%")
+        ->orderBy('name')
+        ->paginate(6)
+        ->withQueryString();
+        
+        return view('autores/index', compact('autores', 'search'));
     }
 }

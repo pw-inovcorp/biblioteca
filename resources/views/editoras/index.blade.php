@@ -10,6 +10,10 @@
         <x-button-crud href="/editoras/create">Criar Editora</x-button-crud>
     </x-slot:action>
 
+     <form action="{{ route('editoras.search') }}" method="GET">
+        <input type="search" name="search" class="mr-sm-2" placeholder="Nome">
+        <button type="submit"class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Pesquisar</button>
+     </form>
     
     <div class="space-y-6 flex flex-col items-center mt-6">
         @foreach ($editoras as $editora)

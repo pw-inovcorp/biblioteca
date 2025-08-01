@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Autor;
 use Illuminate\Http\Request;
 use App\Models\Livro;
 use Illuminate\Validation\Rule;
@@ -90,5 +91,15 @@ class LivroController extends Controller
         $livro->delete();
 
         return redirect('/livros');
+    }
+
+    public function search() {
+        $search = request()->query('search','');
+        $livros = Livro::where('name', 'LIKE', "%{$search}%")
+        ->orderBy('name')
+        ->paginate(6)
+        ->withQueryString();
+        
+        return view('livros/index', compact('livros', 'search'));
     }
 }

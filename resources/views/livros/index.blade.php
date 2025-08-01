@@ -7,12 +7,18 @@
     </x-slot>
 
     <x-slot:action>
-        <x-button-crud href="/livros/create">Criar Livro</x-button-crud> 
+        <x-button-crud href="/livros/create">Criar Livro</x-button-crud>
     </x-slot:action>
 
-    
-    <h1 class="text-2xl font-semibold text-center mt-6">Lista de Livros</h1>
-    <x-button-crud href="/livros/create">Exportar</x-button-crud> 
+    <x-button-crud href="/livros/create">Exportar</x-button-crud>
+
+    <form action="{{ route('livros.search') }}" method="GET">
+        <div class="text-center">
+            <input type="search" name="search" class="mr-sm-2" placeholder="Nome">
+            <button type="submit" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Pesquisar</button>
+        </div>
+    </form>
+
 
     <div class="w-full max-w-7xl mx-auto px-4 mt-6">
         <div class="overflow-x-auto border rounded bg-white">
@@ -31,32 +37,32 @@
                 </thead>
                 <tbody>
                     @foreach ($livros as $livro)
-                        @php
-                            $isUrl = str_starts_with($livro->image, 'http');
-                        @endphp
-                        <tr>
-                            <td class="p-2 border">{{ $livro->isbn }}</td>
-                            <td class="p-2 border">{{ $livro->name }}</td>
-                            <td class="p-2 border">
-                                @if($livro->autores->isNotEmpty())
-                                    @foreach ($livro->autores as $autor)
-                                        <span class="block">{{ $autor->name }}</span>
-                                    @endforeach
-                                @else
-                                    <span class="italic text-gray-500">Sem autores</span>
-                                @endif
-                            </td>
-                            <td class="p-2 border">
-                                {{ $livro->editor?->name ?? 'Sem editora' }}
-                            </td>
-                            <td class="p-2 border">{{ $livro->bibliography }}</td>
-                            <td class="p-2 border text-center">
-                                <img src="{{ $isUrl ? $livro->image : asset('storage/' . $livro->image) }}" alt="{{ $livro->name }}"
-                                    class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;" />
-                            </td>
-                            <td class="p-2 border text-right">€ {{ $livro->price }}</td>
-                            <td> <a href="/livros/{{ $livro->id }}/edit" class="p-2 text-gray-400 font-bold" type="button">Editar</a></td>
-                        </tr>
+                    @php
+                    $isUrl = str_starts_with($livro->image, 'http');
+                    @endphp
+                    <tr>
+                        <td class="p-2 border">{{ $livro->isbn }}</td>
+                        <td class="p-2 border">{{ $livro->name }}</td>
+                        <td class="p-2 border">
+                            @if($livro->autores->isNotEmpty())
+                            @foreach ($livro->autores as $autor)
+                            <span class="block">{{ $autor->name }}</span>
+                            @endforeach
+                            @else
+                            <span class="italic text-gray-500">Sem autores</span>
+                            @endif
+                        </td>
+                        <td class="p-2 border">
+                            {{ $livro->editor?->name ?? 'Sem editora' }}
+                        </td>
+                        <td class="p-2 border">{{ $livro->bibliography }}</td>
+                        <td class="p-2 border text-center">
+                            <img src="{{ $isUrl ? $livro->image : asset('storage/' . $livro->image) }}" alt="{{ $livro->name }}"
+                                class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;" />
+                        </td>
+                        <td class="p-2 border text-right">€ {{ $livro->price }}</td>
+                        <td> <a href="/livros/{{ $livro->id }}/edit" class="p-2 text-gray-400 font-bold" type="button">Editar</a></td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>

@@ -92,6 +92,8 @@ Route::controller(LivroController::class)->group(function() {
     Route::patch('/livros/{id}', 'update');
     //Destroy
     Route::delete('/livros/{id}', 'destroy');
+    //Search
+    Route::get('/livros', 'search')->name('livros.search');
 
 });
 
@@ -109,6 +111,8 @@ Route::controller(EditorController::class)->group(function () {
     Route::patch('/editoras/{id}', 'update');
     //Destroy
     Route::delete('/editoras/{id}', 'destroy');
+    //Search
+    Route::get('/editoras', 'search')->name('editoras.search');
 
 });
 
@@ -126,6 +130,8 @@ Route::controller(AutorController::class)->group(function () {
     Route::patch('/autores/{id}', 'update');
     //Destroy
     Route::delete('/autores/{id}', 'destroy');
+    //Search
+    Route::get('/autores', 'search')->name('autores.search');
 });
 
 
