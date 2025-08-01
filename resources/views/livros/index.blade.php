@@ -10,7 +10,7 @@
         <x-button-crud href="/livros/create">Criar Livro</x-button-crud>
     </x-slot:action>
 
-    <x-button-crud href="/livros/create">Exportar</x-button-crud>
+    <x-button-crud href="/download">Exportar</x-button-crud>
 
     <form action="{{ route('livros.search') }}" method="GET">
         <div class="text-center">
@@ -45,11 +45,9 @@
                         <td class="p-2 border">{{ $livro->name }}</td>
                         <td class="p-2 border">
                             @if($livro->autores->isNotEmpty())
-                            @foreach ($livro->autores as $autor)
-                            <span class="block">{{ $autor->name }}</span>
-                            @endforeach
+                                {{ $livro->autores->pluck('name')->join(', ') }}
                             @else
-                            <span class="italic text-gray-500">Sem autores</span>
+                                <span class="italic text-gray-500">Sem autores</span>
                             @endif
                         </td>
                         <td class="p-2 border">

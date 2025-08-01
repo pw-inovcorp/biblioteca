@@ -10,7 +10,7 @@ class AutorController extends Controller
     //
     public function index()
     {
-        $autores = \App\Models\Autor::paginate(6);
+        $autores = \App\Models\Autor::simplePaginate(6);
         return view('autores/index', ['autores' => $autores]);
     }
 
@@ -77,7 +77,7 @@ class AutorController extends Controller
         $search = request()->query('search','');
         $autores = Autor::where('name', 'LIKE', "%{$search}%")
         ->orderBy('name')
-        ->paginate(6)
+        ->simplePaginate(6)
         ->withQueryString();
         
         return view('autores/index', compact('autores', 'search'));

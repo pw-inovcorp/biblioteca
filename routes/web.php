@@ -94,6 +94,8 @@ Route::controller(LivroController::class)->group(function() {
     Route::delete('/livros/{id}', 'destroy');
     //Search
     Route::get('/livros', 'search')->name('livros.search');
+    //Export
+    Route::get('/download','export');
 
 });
 

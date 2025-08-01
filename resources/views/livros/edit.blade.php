@@ -105,11 +105,11 @@
                                 <p class="mt-4 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-                        <p class="mt-3 text-sm/6 text-gray-600">Write a few sentences about yourself.</p>
+                        <p class="mt-3 text-sm/6 text-gray-600">Escreve uma breve introdução do livro.</p>
                     </div>
 
                     <div class="col-span-full">
-                        <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Cover photo</label>
+                        <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Foto de capa</label>
                         <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                             <div class="text-center">
                                 <svg viewBox="0 0 24 24" fill="currentColor" data-slot="icon" aria-hidden="true"
@@ -157,9 +157,9 @@
             </div>
             
             <div class="mt-6 flex items-center justify-end gap-x-6">
-                <a href="/editoras" type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+                <a href="/editoras" type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancelar</a>
                 <button type="submit"
-                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Salvar</button>
             </div>
         </div>
     </form>

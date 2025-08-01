@@ -6,6 +6,9 @@ use App\Models\Autor;
 use Illuminate\Http\Request;
 use App\Models\Livro;
 use Illuminate\Validation\Rule;
+use App\Exports\LivrosExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Excel as ExcelExcel;
 
 class LivroController extends Controller
 {
@@ -97,9 +100,13 @@ class LivroController extends Controller
         $search = request()->query('search','');
         $livros = Livro::where('name', 'LIKE', "%{$search}%")
         ->orderBy('name')
-        ->paginate(6)
+        ->simplePaginate(6)
         ->withQueryString();
         
         return view('livros/index', compact('livros', 'search'));
+    }
+
+    public function export() {
+        return Excel::download(new LivrosExport, 'livros.xlsx', ExcelExcel::XLSX);
     }
 }
