@@ -14,7 +14,7 @@
 
     <form action="{{ route('livros.search') }}" method="GET">
         <div class="text-center">
-            <input type="search" name="search" class="mr-sm-2" placeholder="Nome">
+            <input type="search" name="search" class="mr-sm-2" value="{{ $search }}" placeholder="Nome">
             <button type="submit" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Pesquisar</button>
         </div>
     </form>
