@@ -34,7 +34,7 @@ class EditorController extends Controller
         return redirect('/editoras');
     }
 
-    public function edit()
+    public function edit($id)
     {
         $editora = \App\Models\Editor::findOrFail($id);
 
@@ -66,7 +66,7 @@ class EditorController extends Controller
         return redirect('/editoras');
     }
 
-    public function destroy()
+    public function destroy($id)
     {
 
         // Find the editor by ID
