@@ -37,6 +37,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function requisicoes() {
+        
+        return $this->hasMany(Requisicao::class);
+    }
+
     public function isAdmin(): bool
     {
         return isset($this->role) && $this->role->name === 'admin';

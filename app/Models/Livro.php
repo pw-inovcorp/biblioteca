@@ -28,4 +28,8 @@ class Livro extends Model
         return $this->belongsToMany(Autor::class, 'autor_livro');
     }
 
+    public function requisicoes() {
+        return $this->hasMany(Requisicao::class);
+    }
+
 }

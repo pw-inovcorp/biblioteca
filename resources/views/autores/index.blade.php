@@ -6,9 +6,11 @@
         </h2>
     </x-slot>
 
-    <x-slot:action>
-        <x-button-crud href="/autores/create">Criar Autor</x-button-crud>
-    </x-slot:action>
+   @if(auth()->check() && auth()->user()->isAdmin())
+        <x-slot:action>
+            <x-button-crud href="/autores/create">Criar Autor</x-button-crud>
+        </x-slot:action>
+    @endif
 
     <form action="{{ route('autores.search') }}" method="GET">
         <input type="search" name="search" class="mr-sm-2" value="{{ $search }}" placeholder="Nome">
@@ -28,7 +30,9 @@
                     class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;"
                 />
                 <div class="mt-4 flex justify-center items-center gap-4">
-                    <x-button-crud href="/autores/{{ $autor->id }}/edit">Editar</x-button-crud>
+                    @if (auth()->check() && auth()->user()->isAdmin())
+                        <x-button-crud href="/autores/{{ $autor->id }}/edit">Editar</x-button-crud>
+                    @endif
                 </div>
             </div>
 

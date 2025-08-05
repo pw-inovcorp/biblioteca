@@ -13,128 +13,111 @@ Route::get('/', function () {
 });
 
 
+Route::middleware(['auth'])->group(function () {
 
-// //Index
-// Route::get('/livros', function () {
-//     $livros = Livro::with('editor','autores')->simplePaginate(6);
-//     return view('livros/index', ['livros' => $livros]);
-// });
+    //Apenas visualização
+    Route::get('/livros', [LivroController::class, 'index']);
+    Route::get('/livros', [LivroController::class, 'search'])->name('livros.search');
+    Route::get('/download', [LivroController::class, 'export']);
 
-// //Create
-// Route::get('/livros/create', function () {
-//     $editoras = \App\Models\Editor::orderBy('name')->get();
-//     $autores = \App\Models\Autor::orderBy('name')->get();
-//     return view('livros/create', ['editoras' => $editoras, 'autores' => $autores]);
-// });
+    Route::get('/editoras', [EditorController::class, 'index']);
+    Route::get('/editoras', [EditorController::class, 'search'])->name('editoras.search');
 
-// //Store
-// Route::post('/livros', function () {
-   
-// });
+    Route::get('/autores', [AutorController::class, 'index']);
+    Route::get('/autores', [AutorController::class, 'search'])->name('autores.search');
+});
 
-// //Edit 
-// Route::get('/livros/{id}/edit', function ($id) {
-//     $livro = Livro::with('editor', 'autores')->findOrFail($id);
-//     $editoras = Editor::orderBy('name')->get();
-//     $autores = \App\Models\Autor::orderBy('name')->get();
-//     return view('livros/edit', ['livro' => $livro, 'editoras' => $editoras, 'autores' => $autores]);
-// });
+Route::middleware(['auth', 'admin'])->group(function() {
+    
+    //CRUD
 
-// //Update
-// Route::patch('/livros/{id}', function ($id) {
+    Route::get('/livros/create', [LivroController::class, 'create']);
+    Route::post('/livros', [LivroController::class, 'store']);
+    Route::get('/livros/{id}/edit', [LivroController::class, 'edit']);
+    Route::patch('/livros/{id}', [LivroController::class, 'update']);
+    Route::delete('/livros/{id}', [LivroController::class, 'destroy']);
 
-//     // Search
-//     $livro = Livro::findOrFail($id);
+    Route::get('/editoras/create', [EditorController::class, 'create']);
+    Route::post('/editoras', [EditorController::class, 'store']);
+    Route::get('/editoras/{id}/edit', [EditorController::class, 'edit']);
+    Route::patch('/editoras/{id}', [EditorController::class, 'update']);
+    Route::delete('/editoras/{id}', [EditorController::class, 'destroy']);
 
-//     //Validate
-//     $data = request()->validate([
-//         'isbn' => 'required|string|max:255',Rule::unique('livros', 'isbn')->ignore($livro->id),
-//         'name' => 'required|string|max:255|min:3',
-//         'editor_id' => 'required|exists:editors,id',
-//         'autores' => 'required|array',
-//         'autores.*' => 'exists:autores,id',
-//         'bibliography' => 'required|string|max:1000',
-//         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-//         'price' => 'required|integer|min:0',
-//     ]);
-
-//     // Handle the image upload
-//     if (request()->hasFile('image')) {
-//         $data['image'] = request()->file('image')->store('livros', 'public');
-//     } else {
-//         // Retain the existing image if no new file is uploaded
-//         unset($data['image']);
-//     }
-
-//     $livro->update($data);
-
-//     return redirect('/livros');
-// });
-
-// //Destroy
-// Route::delete('/livros/{id}', function ($id) {
-//     $livro = \App\Models\Livro::findOrFail($id);
-//     $livro->delete();
-
-//     return redirect('/livros');
-// });
-
-Route::controller(LivroController::class)->group(function() {
-     //Index
-    Route::get('/livros', 'index');
-    //Create
-    Route::get('/livros/create', 'create');
-    //Store
-    Route::post('/livros', 'store');
-    //Edit
-    Route::get('/livros/{id}/edit', 'edit');
-    //Update
-    Route::patch('/livros/{id}', 'update');
-    //Destroy
-    Route::delete('/livros/{id}', 'destroy');
-    //Search
-    Route::get('/livros', 'search')->name('livros.search');
-    //Export
-    Route::get('/download','export');
-
+    Route::get('/autores/create', [AutorController::class, 'create']);
+    Route::post('/autores', [AutorController::class, 'store']);
+    Route::get('/autores/{id}/edit', [AutorController::class, 'edit']);
+    Route::patch('/autores/{id}', [AutorController::class, 'update']);
+    Route::delete('/autores/{id}', [AutorController::class, 'destroy']);
+    
 });
 
 
-Route::controller(EditorController::class)->group(function () {
-    //Index
-    Route::get('/editoras', 'index');
-    //Create
-    Route::get('/editoras/create', 'create');
-    //Store
-    Route::post('/editoras', 'store');
-    //Edit
-    Route::get('/editoras/{id}/edit', 'edit');
-    //Update
-    Route::patch('/editoras/{id}', 'update');
-    //Destroy
-    Route::delete('/editoras/{id}', 'destroy');
-    //Search
-    Route::get('/editoras', 'search')->name('editoras.search');
-
-});
 
 
-Route::controller(AutorController::class)->group(function () {
-    //Index
-    Route::get('/autores', 'index');
-    //Create
-    Route::get('/autores/create', 'create');
-    //Store
-    Route::post('/autores', 'store');
-    //Edit
-    Route::get('/autores/{id}/edit', 'edit');
-    //Update
-    Route::patch('/autores/{id}', 'update');
-    //Destroy
-    Route::delete('/autores/{id}', 'destroy');
-    //Search
-    Route::get('/autores', 'search')->name('autores.search');
-});
+
+
+
+
+
+
+
+
+//     Route::controller(LivroController::class)->group(function() {
+//         //Index
+//         Route::get('/livros', 'index');
+//         //Create
+//         Route::get('/livros/create', 'create');
+//         //Store
+//          Route::post('/livros', 'store');
+// //     //Edit
+//     Route::get('/livros/{id}/edit', 'edit');
+//     //Update
+//     Route::patch('/livros/{id}', 'update');
+//     //Destroy
+//     Route::delete('/livros/{id}', 'destroy');
+//     //Search
+//     Route::get('/livros', 'search')->name('livros.search');
+//     //Export
+//     Route::get('/download','export');
+
+// });
+
+
+// Route::controller(EditorController::class)->group(function () {
+//     //Index
+//     Route::get('/editoras', 'index');
+//     //Create
+//     Route::get('/editoras/create', 'create');
+//     //Store
+//     Route::post('/editoras', 'store');
+//     //Edit
+//     Route::get('/editoras/{id}/edit', 'edit');
+//     //Update
+//     Route::patch('/editoras/{id}', 'update');
+//     //Destroy
+//     Route::delete('/editoras/{id}', 'destroy');
+//     //Search
+//     Route::get('/editoras', 'search')->name('editoras.search');
+
+// });
+
+
+// Route::controller(AutorController::class)->group(function () {
+//     //Index
+//     Route::get('/autores', 'index');
+//     //Create
+//     Route::get('/autores/create', 'create');
+//     //Store
+//     Route::post('/autores', 'store');
+//     //Edit
+//     Route::get('/autores/{id}/edit', 'edit');
+//     //Update
+//     Route::patch('/autores/{id}', 'update');
+//     //Destroy
+//     Route::delete('/autores/{id}', 'destroy');
+//     //Search
+//     Route::get('/autores', 'search')->name('autores.search');
+// });
 
 //test
 Route::get('/admin-only', function () {

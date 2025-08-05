@@ -6,9 +6,11 @@
         </h2>
     </x-slot>
 
-    <x-slot:action>
-        <x-button-crud href="/livros/create">Criar Livro</x-button-crud>
-    </x-slot:action>
+    @if(auth()->check() && auth()->user()->isAdmin())
+        <x-slot:action>
+            <x-button-crud href="/livros/create">Criar Livro</x-button-crud>
+        </x-slot:action>
+    @endif
 
     <x-button-crud href="/download">Exportar</x-button-crud>
 
@@ -59,7 +61,9 @@
                                 class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;" />
                         </td>
                         <td class="p-2 border text-right">€ {{ $livro->price }}</td>
-                        <td> <a href="/livros/{{ $livro->id }}/edit" class="p-2 text-gray-400 font-bold" type="button">Editar</a></td>
+                        @if(auth()->check() && auth()->user()->isAdmin())
+                            <td> <a href="/livros/{{ $livro->id }}/edit" class="p-2 text-gray-400 font-bold" type="button">Editar</a></td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
