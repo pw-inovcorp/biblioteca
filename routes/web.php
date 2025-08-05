@@ -136,6 +136,12 @@ Route::controller(AutorController::class)->group(function () {
     Route::get('/autores', 'search')->name('autores.search');
 });
 
+//test
+Route::get('/admin-only', function () {
+    return 'És admin!';
+})->middleware('admin');
+
+
 
 Route::middleware([
     'auth:sanctum',
