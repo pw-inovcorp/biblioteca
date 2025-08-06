@@ -42,6 +42,13 @@ class Requisicao extends Model
         return $this->belongsTo(Livro::class);
     }
 
+    //Geracao automatico de numero de requisicao
+    public static function generateNumeroRequisicao(): string
+    {
+        $ultimoId = self::max('id') ?? 0;
+        $numero = $ultimoId + 1;
+        return 'REQ-' . str_pad($numero, 4, '0', STR_PAD_LEFT);
+    }
 
     // Verificar se está atrasada
     public function isAtrasada(): bool

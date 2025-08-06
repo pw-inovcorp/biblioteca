@@ -9,7 +9,7 @@
     
 
     {{-- Mensagens de sucesso/erro --}}
-    @if(session('success'))
+    {{-- @if(session('success'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
                 {{ session('success') }}
@@ -23,7 +23,7 @@
                 {{ session('error') }}
             </div>
         </div>
-    @endif
+    @endif --}}
 
     <div class="w-full max-w-7xl mx-auto px-4 mt-6">
         <div class="overflow-x-auto border rounded bg-white">

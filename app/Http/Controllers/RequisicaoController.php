@@ -29,6 +29,67 @@ class RequisicaoController extends Controller
         }
 
         return view('/requisicoes/index', ['requisicoes' => $requisicoes]);
+    }
 
+    //Create
+    public function create($livroId) 
+    {
+
+        $livro = Livro::findOrFail($livroId);
+
+        if($livro->estaDisponivel() === false) {
+            return redirect()->back()->with('error', 'Este livro já está requisitado!');
+        }
+
+        if (auth()->user()->podeRequisitarMaisLivros() === false) {
+            return redirect()->back()->with('error', 'Já tem 3 livros requisitados');
+        }
+
+        return view('/requisicoes/create', ['livro' => $livro]);
+    }
+
+    //Store
+    public function store()
+    {
+
+        //Validação
+        request()->validate([
+            'livro_id' => ['required','exists:livros,id'],
+            'foto_cidadao' => ['nullable','image','mimes:jpeg,png,jpg,gif','max:2048']
+        ]);
+
+        $livro = Livro::findOrFail(request()->livro_id);
+
+        if ($livro->estaDisponivel() === false) {
+            return redirect('/livros/index')->with('error', 'Este livro já está requisitado!');
+        }
+
+        if (!auth()->user()->podeRequisitarMaisLivros()) {
+            return redirect()->route('requisicoes.index')->with('error', 'Você já tem 3 livros requisitados!');
+        }
+
+         // Upload da foto se fornecida
+        $fotoPath = null;
+        if (request()->hasFile('foto_cidadao')) {
+            $fotoPath = request()->file('foto_cidadao')->store('fotos_requisicoes', 'public');
+        }
+
+        // Criar requisição
+        $requisicao = Requisicao::create([
+            'numero_requisicao' => Requisicao::generateNumeroRequisicao(),
+            'user_id' => auth()->user()->id,
+            'livro_id' => $livro->id,
+            'data_requisicao' => Carbon::today(),
+            'data_prevista_entrega' => Carbon::today()->addDays(5),
+            'foto_cidadao' => $fotoPath,
+            'status' => 'ativa'
+        ]);
+        
+        // TODO: Enviar email para admin e cidadão
+
+        //Direcionar
+        return redirect()->route('requisicoes.index')
+            ->with('success', 'Livro requisitado com sucesso! Devolução até: ' . 
+                   $requisicao->data_prevista_entrega->format('d/m/Y'));
     }
 }

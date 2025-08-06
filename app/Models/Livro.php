@@ -34,6 +34,7 @@ class Livro extends Model
         return $this->hasMany(Requisicao::class);
     }
 
+
     //Verificar se está disponivl
     public function estaDisponivel(): bool
     {

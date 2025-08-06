@@ -16,7 +16,7 @@
 
     <form action="{{ route('livros.search') }}" method="GET">
         <div class="text-center">
-            <input type="search" name="search" class="mr-sm-2" value="{{ $search }}" placeholder="Nome">
+            <input type="search" name="search" class="mr-sm-2" value="{{ $search ?? '' }}" placeholder="Nome">
             <button type="submit" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Pesquisar</button>
         </div>
     </form>
@@ -31,9 +31,10 @@
                         <th class="p-2 border text-left">Nome</th>
                         <th class="p-2 border text-left">Autor(es)</th>
                         <th class="p-2 border text-left">Editora</th>
-                        <th class="p-2 border text-left">Bibliografia</th>
-                        <th class="p-2 border text-center">Imagem</th>
+                        {{-- <th class="p-2 border text-left">Bibliografia</th> --}}
                         <th class="p-2 border text-right">Preço</th>
+                        <th class="p-2 border text-left">Disponibilidade</th>
+                        <th class="p-2 border text-center">Imagem</th>
                         <th class="p-2 border text-center">Ações</th>
                     </tr>
                 </thead>
@@ -55,15 +56,29 @@
                         <td class="p-2 border">
                             {{ $livro->editor?->name ?? 'Sem editora' }}
                         </td>
-                        <td class="p-2 border">{{ $livro->bibliography }}</td>
+                        {{-- <td class="p-2 border">{{ $livro->bibliography }}</td> --}}
+                        <td class="p-2 border text-right">€ {{ $livro->price }}</td>
                         <td class="p-2 border text-center">
+                            @if($livro->estaDisponivel())
+                                <span class="text-green-600 font-semibold">Disponível</span>
+                                @if(auth()->user()->podeRequisitarMaisLivros())
+                                    <br>
+                                    <a href="{{ route('requisicoes.create', $livro->id) }}" class="text-blue-600 hover:text-blue-800 text-sm underline">
+                                        Requisitar
+                                    </a>
+                                @endif
+                            @else
+                                <span class="text-red-600 font-semibold">Requisitado</span>
+                            @endif
+                        </td>
+                         <td class="p-2 border text-center">
                             <img src="{{ $isUrl ? $livro->image : asset('storage/' . $livro->image) }}" alt="{{ $livro->name }}"
                                 class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;" />
                         </td>
-                        <td class="p-2 border text-right">€ {{ $livro->price }}</td>
                         @if(auth()->check() && auth()->user()->isAdmin())
-                            <td> <a href="/livros/{{ $livro->id }}/edit" class="p-2 text-gray-400 font-bold" type="button">Editar</a></td>
+                        <td> <a href="/livros/{{ $livro->id }}/edit" class="p-2 text-gray-400 font-bold" type="button">Editar</a></td>
                         @endif
+
                     </tr>
                     @endforeach
                 </tbody>

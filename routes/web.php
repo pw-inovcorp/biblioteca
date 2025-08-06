@@ -18,17 +18,19 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
 
     //Apenas visualização --para cidadao e admin
-    Route::get('/livros', [LivroController::class, 'index']);
-    Route::get('/livros', [LivroController::class, 'search'])->name('livros.search');
+    Route::get('/livros', [LivroController::class, 'index'])->name('livros.index');
+    Route::get('/livros/search', [LivroController::class, 'search'])->name('livros.search');
     Route::get('/download', [LivroController::class, 'export']);
 
     Route::get('/editoras', [EditorController::class, 'index']);
-    Route::get('/editoras', [EditorController::class, 'search'])->name('editoras.search');
+    Route::get('/editoras/search', [EditorController::class, 'search'])->name('editoras.search');
 
     Route::get('/autores', [AutorController::class, 'index']);
-    Route::get('/autores', [AutorController::class, 'search'])->name('autores.search');
+    Route::get('/autores/search', [AutorController::class, 'search'])->name('autores.search');
 
     Route::get('/requisicoes', [RequisicaoController::class, 'index'])->name('requisicoes.index');
+    Route::get('/requisicoes/create/{livro}', [RequisicaoController::class, 'create'])->name('requisicoes.create');
+    Route::post('/requisicoes', [RequisicaoController::class, 'store'])->name('requisicoes.store');
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {
