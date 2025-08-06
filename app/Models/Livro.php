@@ -19,10 +19,12 @@ class Livro extends Model
         'price'
     ];
 
+    //Relações
     public function editor()
     {
         return $this->belongsTo(Editor::class);
     }
+
     public function autores()
     {
         return $this->belongsToMany(Autor::class, 'autor_livro');
@@ -31,5 +33,19 @@ class Livro extends Model
     public function requisicoes() {
         return $this->hasMany(Requisicao::class);
     }
+
+    //Verificar se está disponivl
+    public function estaDisponivel(): bool
+    {
+        return $this->requisicoes()->ativas()->exists() === false;
+    }
+
+    //Pegar no primeiro livro (se existir disponivel)
+    public function requisicaoAtiva(): ?Requisicao 
+    {
+        return $this->requisicoes()->ativas()->first();
+    }
+
+
 
 }

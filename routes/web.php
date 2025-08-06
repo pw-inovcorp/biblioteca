@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AutorController;
 use App\Http\Controllers\LivroController;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\RequisicaoController;
+use App\Models\Requisicao;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -15,7 +17,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    //Apenas visualização
+    //Apenas visualização --para cidadao e admin
     Route::get('/livros', [LivroController::class, 'index']);
     Route::get('/livros', [LivroController::class, 'search'])->name('livros.search');
     Route::get('/download', [LivroController::class, 'export']);
@@ -25,11 +27,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/autores', [AutorController::class, 'index']);
     Route::get('/autores', [AutorController::class, 'search'])->name('autores.search');
+
+    Route::get('/requisicoes', [RequisicaoController::class, 'index'])->name('requisicoes.index');
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {
     
-    //CRUD
+    // Admin CRUD
 
     Route::get('/livros/create', [LivroController::class, 'create']);
     Route::post('/livros', [LivroController::class, 'store']);

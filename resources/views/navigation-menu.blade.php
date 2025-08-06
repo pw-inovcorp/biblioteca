@@ -33,6 +33,10 @@
                     <x-nav-link href="{{ url('/editoras') }}" :active="request()->is('editoras')">
                         {{ __('Editoras') }}
                     </x-nav-link>
+
+                    <x-nav-link href="{{ url('/requisicoes') }}" :active="request()->is('requisicoes')">
+                        {{ __('Requisições') }}
+                    </x-nav-link>
                 </div>
 
             </div>

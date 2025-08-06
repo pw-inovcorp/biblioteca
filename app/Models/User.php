@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,6 +34,7 @@ class User extends Authenticatable
         'role_id'
     ];
 
+    //Relações
     public function role()
     {
         return $this->belongsTo(Role::class);
@@ -42,6 +45,7 @@ class User extends Authenticatable
         return $this->hasMany(Requisicao::class);
     }
 
+    //Permissões
     public function isAdmin(): bool
     {
         return isset($this->role) && $this->role->name === 'admin';
@@ -51,6 +55,21 @@ class User extends Authenticatable
     {
         return isset($this->role) && $this->role->name === 'cidadao';
     }
+
+
+    // Verificar se pode requisitar mais livros (máximo 3)
+    public function podeRequisitarMaisLivros(): bool
+    {
+        return $this->requisicoes()->ativas()->count() < 3;
+    }
+
+    // Requisições ativas
+    public function requisicoesAtivas() : Builder
+    {
+        return $this->requisicoes()->ativas();
+    }
+
+
 
     /**
      * The attributes that should be hidden for serialization.

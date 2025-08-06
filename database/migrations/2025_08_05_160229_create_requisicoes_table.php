@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('status', ['ativa', 'devolvida', 'atrasada'])->default('ativa');
             $table->integer('dias_decorridos')->nullable(); // calculado na devolução
             $table->string('foto_cidadao')->nullable();
+            
 
         });
     }
