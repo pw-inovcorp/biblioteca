@@ -37,6 +37,8 @@ Route::middleware(['auth', 'admin'])->group(function() {
     
     // Admin CRUD
 
+    Route::patch('/requisicoes/{id}/devolver', [RequisicaoController::class, 'devolver'])->name('requisicoes.devolver');
+
     Route::get('/livros/create', [LivroController::class, 'create']);
     Route::post('/livros', [LivroController::class, 'store']);
     Route::get('/livros/{id}/edit', [LivroController::class, 'edit']);

@@ -92,4 +92,22 @@ class RequisicaoController extends Controller
             ->with('success', 'Livro requisitado com sucesso! Devolução até: ' . 
                    $requisicao->data_prevista_entrega->format('d/m/Y'));
     }
+
+    //Devolver o livro (apenas admin)
+    public function devolver($id)
+    {
+        $requisicao = Requisicao::findOrFail($id);
+
+        if($requisicao->status !== "ativa") {
+            return redirect()->back()->with('error', 'Esta requisição já foi devolvida');
+        } 
+
+        $requisicao->status = "devolvida";
+        $requisicao->data_real_entrega = Carbon::today();
+        $requisicao->dias_decorridos = $requisicao->calcularDiasDecorridos();
+        $requisicao->save();
+
+        return redirect()->route('requisicoes.index')->with('success', 'Livro devolvido com sucesso!');
+
+    }
 }

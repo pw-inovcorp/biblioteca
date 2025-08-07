@@ -8,8 +8,7 @@
 
     
 
-    {{-- Mensagens de sucesso/erro --}}
-    {{-- @if(session('success'))
+    @if(session('success'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
                 {{ session('success') }}
@@ -23,22 +22,24 @@
                 {{ session('error') }}
             </div>
         </div>
-    @endif --}}
+    @endif
 
     <div class="w-full max-w-7xl mx-auto px-4 mt-6">
         <div class="overflow-x-auto border rounded bg-white">
-            <table class="w-full border-collapse">
+            <table class="w-full border-collapse text-center">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="p-2 border text-left">Nº Requisição</th>
-                        <th class="p-2 border text-left">Livro</th>
+                        <th class="p-2 border text-center">Nº Requisição</th>
+                        <th class="p-2 border text-center">Livro</th>
                         @if(auth()->user()->isAdmin())
-                            <th class="p-2 border text-left">Cidadão</th>
+                            <th class="p-2 border text-center">Cidadão</th>
                         @endif
-                        <th class="p-2 border text-left">Data Requisição</th>
-                        <th class="p-2 border text-left">Devolução Prevista</th>
-                        <th class="p-2 border text-left">Status</th>
-                        <th class="p-2 border text-center">Ações</th>
+                        <th class="p-2 border text-center">Data Requisição</th>
+                        <th class="p-2 border text-center">Devolução Prevista</th>
+                        <th class="p-2 border text-center">Status</th>
+                        @if(auth()->user()->isAdmin())
+                            <th class="p-2 border text-center">Ações</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -66,11 +67,19 @@
                                 @endif
                             @endif
                         </td>
-                        <td class="p-2 border text-center">
-
-                            //ToDo
-                            
-                        </td>
+                       
+                            @if(auth()->user()->isAdmin() && $requisicao->status === "ativa")
+                                <td>
+                                    <form method="POST" action="{{ route('requisicoes.devolver', $requisicao->id) }}">
+                                    @csrf
+                                    @method('PATCH')
+                                        <button type="submit" class="text-green-600 hover:text-green-800 font-semibold"
+                                                onclick="return confirm('Confirmar devolução?')">
+                                            Confirmar Devolução
+                                        </button>
+                                    </form>   
+                                </td>        
+                            @endif    
                     </tr>
                     @endforeach
                 </tbody>
