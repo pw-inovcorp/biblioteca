@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :incluirScript="false">
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -23,7 +23,7 @@
             @php
                 $isUrl = str_starts_with($autor->foto, 'http');
             @endphp
-            
+
             <div class="rounded-lg p-4 w-64 text-center">
                 <h2 class="text-xl font-bold">{{ $autor->name }}</h2>
                 <img src="{{ $isUrl ? $autor->foto : asset('storage/' . $autor->foto) }}" alt="{{ $autor->name }}"
@@ -42,5 +42,5 @@
         </div>
     </div>
 
-     
+
 </x-app-layout>

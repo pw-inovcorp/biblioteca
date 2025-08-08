@@ -26,6 +26,10 @@
                         {{ __('Livros') }}
                     </x-nav-link>
 
+                    <x-nav-link href="{{ url('/requisicoes') }}" :active="request()->is('requisicoes')">
+                        {{ __('Requisições') }}
+                    </x-nav-link>
+
                     <x-nav-link href="{{ url('/autores') }}" :active="request()->is('autores')">
                         {{ __('Autores') }}
                     </x-nav-link>
@@ -34,9 +38,6 @@
                         {{ __('Editoras') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ url('/requisicoes') }}" :active="request()->is('requisicoes')">
-                        {{ __('Requisições') }}
-                    </x-nav-link>
                 </div>
 
             </div>

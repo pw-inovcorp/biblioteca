@@ -7,7 +7,6 @@
     </x-slot>
 
 
-
     @if(session('success'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
@@ -24,7 +23,27 @@
         </div>
     @endif
 
+
+
     @if(auth()->user()->isAdmin())
+        {{--Indicadores--}}
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="text-sm text-gray-600">Requisições Ativas</div>
+                    <div class="text-2xl font-bold text-yellow-600">{{ $estatisticas['ativas'] }}</div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="text-sm text-gray-600">Últimos 30 dias</div>
+                    <div class="text-2xl font-bold text-green-600">{{ $estatisticas['ultimos_30_dias'] }}</div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="text-sm text-gray-600">Entregues Hoje</div>
+                    <div class="text-2xl font-bold">{{ $estatisticas['entregues_hoje'] }}</div>
+                </div>
+            </div>
+        </div>
+        {{--Barra de pesquisa--}}
         <form action="{{ route('requisicoes.search') }}" method="GET">
             <div class="text-center">
                 <input type="search" name="search" class="mr-sm-2" value="{{ $search ?? '' }}" placeholder="Nome cidadão">

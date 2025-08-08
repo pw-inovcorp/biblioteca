@@ -6,10 +6,10 @@
         </h2>
     </x-slot>
 
-    <script src="https://cdn.tailwindcss.com"></script>
 
 
-     
+
+
 
     <form method="POST" action="{{ route('requisicoes.store') }}" enctype="multipart/form-data">
         @csrf
@@ -22,7 +22,7 @@
 
                 {{-- Dados do Livro --}}
                 <div class="mt-10 bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold mb-2">Dados do Livro:</h3>
+                    <h3 class="font-semibold mb-2">Bibliografia:</h3>
                     <p><strong>Título:</strong> {{ $livro->name }}</p>
                     <p><strong>ISBN:</strong> {{ $livro->isbn }}</p>
                     <p><strong>Editora:</strong> {{ $livro->editor->name ?? 'Sem editora' }}</p>

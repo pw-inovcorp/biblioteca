@@ -11,6 +11,11 @@ export default {
         './resources/views/**/*.blade.php',
     ],
 
+    safelist: [
+        'text-blue-600',
+        'text-purple-600',
+    ],
+
     theme: {
         extend: {
             fontFamily: {

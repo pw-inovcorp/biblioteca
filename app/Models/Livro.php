@@ -5,6 +5,36 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $isbn
+ * @property string $name
+ * @property int $editor_id
+ * @property string $bibliography
+ * @property string|null $image
+ * @property string|null $price
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Autor> $autores
+ * @property-read int|null $autores_count
+ * @property-read \App\Models\Editor|null $editor
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Requisicao> $requisicoes
+ * @property-read int|null $requisicoes_count
+ * @method static \Database\Factories\LivroFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro whereBibliography($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro whereEditorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro whereIsbn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Livro whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Livro extends Model
 {
     /** @use HasFactory<\Database\Factories\LivroFactory> */

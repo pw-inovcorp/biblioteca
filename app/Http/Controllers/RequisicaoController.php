@@ -32,7 +32,14 @@ class RequisicaoController extends Controller
                 ->paginate(10);
         }
 
-        return view('/requisicoes/index', ['requisicoes' => $requisicoes]);
+        //indicadores
+        $estatisticas = [
+            "ativas" => Requisicao::ativas()->count(),
+            "ultimos_30_dias" => Requisicao::ultimos30Dias()->count(),
+            "entregues_hoje" => Requisicao::entreguesHoje()->count()
+        ];
+
+        return view('/requisicoes/index', ['requisicoes' => $requisicoes, 'estatisticas' => $estatisticas]);
     }
 
     //Create

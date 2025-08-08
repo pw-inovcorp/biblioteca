@@ -6,6 +6,42 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Carbon\Carbon;
 
+/**
+ * @property int $id
+ * @property string $numero_requisicao
+ * @property int $user_id
+ * @property int $livro_id
+ * @property \Illuminate\Support\Carbon $data_requisicao
+ * @property \Illuminate\Support\Carbon $data_prevista_entrega
+ * @property \Illuminate\Support\Carbon|null $data_real_entrega
+ * @property string $status
+ * @property int|null $dias_decorridos
+ * @property string|null $foto_cidadao
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Livro|null $livro
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao ativas()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao doUsuario($userId)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao entreguesHoje()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao ultimos30Dias()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereDataPrevistaEntrega($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereDataRealEntrega($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereDataRequisicao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereDiasDecorridos($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereFotoCidadao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereLivroId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereNumeroRequisicao($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Requisicao whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Requisicao extends Model
 {
     //
@@ -75,6 +111,16 @@ class Requisicao extends Model
     public function scopeDoUsuario($query, $userId)
     {
         return $query->where('user_id', $userId);
+    }
+
+    public function scopeUltimos30Dias($query)
+    {
+        return $query->where('data_requisicao', '>=', Carbon::today()->subDays(30));
+    }
+
+    public function scopeEntreguesHoje($query)
+    {
+        return $query->whereDate('data_real_entrega', '=', Carbon::today());
     }
 
 
