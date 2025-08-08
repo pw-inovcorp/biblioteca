@@ -63,7 +63,7 @@
                 {{-- Aviso --}}
                 <div class="mt-6 bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
                     <p class="text-sm text-yellow-800">
-                        <strong>Atenção:</strong> Tem 5 dias para devolver o livro.
+                        <strong>Atenção:</strong> Cada usuário só pode requisitar 3 livros. Tem 5 dias para devolver o livro.
                         Receberá um lembrete por email um dia antes da data de devolução.
                     </p>
                 </div>

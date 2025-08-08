@@ -35,18 +35,18 @@
                 </div>
                 <div class="bg-white rounded-lg shadow p-4">
                     <div class="text-sm text-gray-600">Últimos 30 dias</div>
-                    <div class="text-2xl font-bold text-green-600">{{ $estatisticas['ultimos_30_dias'] }}</div>
+                    <div class="text-2xl font-bold text-grey-600">{{ $estatisticas['ultimos_30_dias'] }}</div>
                 </div>
                 <div class="bg-white rounded-lg shadow p-4">
                     <div class="text-sm text-gray-600">Entregues Hoje</div>
-                    <div class="text-2xl font-bold">{{ $estatisticas['entregues_hoje'] }}</div>
+                    <div class="text-2xl font-bold text-green-600">{{ $estatisticas['entregues_hoje'] }}</div>
                 </div>
             </div>
         </div>
         {{--Barra de pesquisa--}}
         <form action="{{ route('requisicoes.search') }}" method="GET">
             <div class="text-center">
-                <input type="search" name="search" class="mr-sm-2" value="{{ $search ?? '' }}" placeholder="Nome cidadão">
+                <input type="search" name="search" class="mr-sm-2" value="{{ $search ?? '' }}" placeholder="Livro/Cidadão">
                 <button type="submit" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Pesquisar</button>
             </div>
         </form>

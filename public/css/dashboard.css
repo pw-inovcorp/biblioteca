@@ -1,0 +1,23 @@
+.box {
+    background: white;
+    border-radius: 6px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.text-small {
+    font-size: 0.875rem;
+    color: #555;
+}
+
+.text-big {
+    font-size: 2rem;
+    font-weight: bold;
+}

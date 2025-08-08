@@ -76,7 +76,7 @@ class RequisicaoController extends Controller
         }
 
         if (!auth()->user()->podeRequisitarMaisLivros()) {
-            return redirect()->route('requisicoes.index')->with('error', 'Você já tem 3 livros requisitados!');
+            return redirect()->route('requisicoes.index')->with('error', 'Já tem 3 livros requisitados!');
         }
 
          // Upload da foto se fornecida
@@ -137,10 +137,18 @@ class RequisicaoController extends Controller
         $search = request()->query('search','');
         $requisicoes = Requisicao::with(['user', 'livro'])
             ->whereHas('user', fn($q) => $q->where('name', 'like', "%{$search}%"))
+            ->orWhereHas('livro', fn($q) => $q->where('name', 'like', "%{$search}%"))
             ->latest()
             ->Paginate(10)
             ->withQueryString();
 
-        return view('requisicoes/index', compact('requisicoes', 'search'));
+        //indicadores
+        $estatisticas = [
+            "ativas" => Requisicao::ativas()->count(),
+            "ultimos_30_dias" => Requisicao::ultimos30Dias()->count(),
+            "entregues_hoje" => Requisicao::entreguesHoje()->count()
+        ];
+
+        return view('requisicoes/index', compact('requisicoes', 'search', 'estatisticas'));
     }
 }

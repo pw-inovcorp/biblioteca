@@ -14,7 +14,6 @@
 
     <x-button-crud href="/download">Exportar</x-button-crud>
 
-
     @if(session('success'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
@@ -24,7 +23,7 @@
     @endif
 
     @if(session('error'))
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4 mt-6">
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
                 {{ session('error') }}
             </div>
@@ -82,12 +81,10 @@
                         <td class="p-2 border text-center">
                             @if($livro->estaDisponivel())
                                 <span class="text-green-600 font-semibold">Disponível</span>
-                                @if(auth()->user()->podeRequisitarMaisLivros())
                                     <br>
                                     <a href="{{ route('requisicoes.create', $livro->id) }}" class="text-sm underline">
                                         Requisitar
                                     </a>
-                                @endif
                             @else
                                 <span class="text-red-600 font-semibold">Requisitado</span>
                             @endif
