@@ -32,12 +32,12 @@ class Requisicao extends Model
     ];
 
     //Relações
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function livro()
+    public function livro(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Livro::class);
     }
@@ -53,7 +53,7 @@ class Requisicao extends Model
     // Verificar se está atrasada
     public function isAtrasada(): bool
     {
-        return $this->status === 'ativa' && 
+        return $this->status === 'ativa' &&
                $this->data_prevista_entrega < Carbon::today();
     }
 

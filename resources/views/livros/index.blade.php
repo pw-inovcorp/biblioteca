@@ -31,7 +31,7 @@
         </div>
     @endif
 
-    
+
     <form action="{{ route('livros.search') }}" method="GET">
         <div class="text-center">
             <input type="search" name="search" class="mr-sm-2" value="{{ $search ?? '' }}" placeholder="Nome">
@@ -96,7 +96,7 @@
                                 class="mx-auto rounded-full mt-2 object-cover shadow-md" style="max-width: 300px; max-height: 300px;" />
                         </td>
                         @if(auth()->check() && auth()->user()->isAdmin())
-                        <td> <a href="/livros/{{ $livro->id }}/edit" class="p-2 text-gray-400 font-bold" type="button">
+                        <td> <a href="/livros/{{ $livro->id }}/edit" class="p-2 text-gray-400 font-bold underline" type="button">
                             Editar</a>
                         </td>
                         @endif

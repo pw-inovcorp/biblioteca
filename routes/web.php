@@ -34,10 +34,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {
-    
+
     // Admin CRUD
 
     Route::patch('/requisicoes/{id}/devolver', [RequisicaoController::class, 'devolver'])->name('requisicoes.devolver');
+    Route::get('/requisicoes/search', [RequisicaoController::class, 'search'])->name('requisicoes.search');
 
     Route::get('/livros/create', [LivroController::class, 'create']);
     Route::post('/livros', [LivroController::class, 'store']);
@@ -56,7 +57,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/autores/{id}/edit', [AutorController::class, 'edit']);
     Route::patch('/autores/{id}', [AutorController::class, 'update']);
     Route::delete('/autores/{id}', [AutorController::class, 'destroy']);
-    
+
 });
 
 

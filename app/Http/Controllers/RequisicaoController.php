@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 class RequisicaoController extends Controller
 {
     // Index
-    public function Index() 
+    public function Index()
     {
         // dd(auth()->user());
         $user = auth()->user();
@@ -27,6 +27,7 @@ class RequisicaoController extends Controller
         } else {
             //Cidadao vê apenas as suas
             $requisicoes = Requisicao::with(['livro'])
+                ->where('user_id', $user->id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
@@ -35,7 +36,7 @@ class RequisicaoController extends Controller
     }
 
     //Create
-    public function create($livroId) 
+    public function create($livroId)
     {
 
         $livro = Livro::findOrFail($livroId);
@@ -96,7 +97,7 @@ class RequisicaoController extends Controller
         $admins = User::whereHas('role', function ($q) {
             $q->where('name', 'admin');
         })->get();
-        
+
 
         foreach ($admins as $admin) {
             Mail::to($admin->email)->send(new NovaRequisicaoAdminMail($requisicao));
@@ -104,7 +105,7 @@ class RequisicaoController extends Controller
 
         //Direcionar
         return redirect()->route('requisicoes.index')
-            ->with('success', 'Livro requisitado com sucesso! Devolução até: ' . 
+            ->with('success', 'Livro requisitado com sucesso! Devolução até: ' .
                    $requisicao->data_prevista_entrega->format('d/m/Y'));
     }
 
@@ -115,7 +116,7 @@ class RequisicaoController extends Controller
 
         if($requisicao->status !== "ativa") {
             return redirect()->back()->with('error', 'Esta requisição já foi devolvida');
-        } 
+        }
 
         $requisicao->status = "devolvida";
         $requisicao->data_real_entrega = Carbon::today();
@@ -124,5 +125,15 @@ class RequisicaoController extends Controller
 
         return redirect()->route('requisicoes.index')->with('success', 'Livro devolvido com sucesso!');
 
+    }
+    public function search() {
+        $search = request()->query('search','');
+        $requisicoes = Requisicao::with(['user', 'livro'])
+            ->whereHas('user', fn($q) => $q->where('name', 'like', "%{$search}%"))
+            ->latest()
+            ->Paginate(10)
+            ->withQueryString();
+
+        return view('requisicoes/index', compact('requisicoes', 'search'));
     }
 }

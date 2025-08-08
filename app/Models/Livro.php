@@ -42,9 +42,9 @@ class Livro extends Model
     }
 
     //Pegar no primeiro livro (se existir disponivel)
-    public function requisicaoAtiva(): ?Requisicao 
+    public function requisicaoAtiva(): ?Requisicao
     {
-        return $this->requisicoes()->ativas()->first();
+        return $this->requisicoes()->exists()->first();
     }
 
 

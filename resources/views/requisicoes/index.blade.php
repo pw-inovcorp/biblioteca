@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
 
-    
+
 
     @if(session('success'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
@@ -22,6 +22,15 @@
                 {{ session('error') }}
             </div>
         </div>
+    @endif
+
+    @if(auth()->user()->isAdmin())
+        <form action="{{ route('requisicoes.search') }}" method="GET">
+            <div class="text-center">
+                <input type="search" name="search" class="mr-sm-2" value="{{ $search ?? '' }}" placeholder="Nome cidadão">
+                <button type="submit" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Pesquisar</button>
+            </div>
+        </form>
     @endif
 
     <div class="w-full max-w-7xl mx-auto px-4 mt-6">
@@ -67,26 +76,26 @@
                                 @endif
                             @endif
                         </td>
-                       
+
                             @if(auth()->user()->isAdmin() && $requisicao->status === "ativa")
                                 <td>
                                     <form method="POST" action="{{ route('requisicoes.devolver', $requisicao->id) }}">
                                     @csrf
                                     @method('PATCH')
-                                        <button type="submit" class="text-green-600 hover:text-green-800 font-semibold"
+                                        <button type="submit" class="text-gray underline"
                                                 onclick="return confirm('Confirmar devolução?')">
                                             Confirmar Devolução
                                         </button>
-                                    </form>   
-                                </td>        
-                            @endif    
+                                    </form>
+                                </td>
+                            @endif
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-   
+
     <div class="mt-6">
         {{ $requisicoes->links() }}
     </div>
