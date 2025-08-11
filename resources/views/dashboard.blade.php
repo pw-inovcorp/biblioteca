@@ -7,6 +7,15 @@
 
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 
+    @if(session('error'))
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                {{ session('error') }}
+            </div>
+        </div>
+    @endif
+
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto px-4">
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EditorController;
+use App\Http\Controllers\GoogleBooksController;
 use App\Models\Editor;
 use App\Models\Livro;
 use Illuminate\Support\Facades\Route;
@@ -31,14 +32,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/requisicoes', [RequisicaoController::class, 'index'])->name('requisicoes.index');
     Route::get('/requisicoes/create/{livro}', [RequisicaoController::class, 'create'])->name('requisicoes.create');
     Route::post('/requisicoes', [RequisicaoController::class, 'store'])->name('requisicoes.store');
+
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {
 
     // Admin CRUD
 
+    Route::get('/google-books', [GoogleBooksController::class, 'index'])->name('google-books.index');
+    Route::get('/google-books/test', [GoogleBooksController::class, 'test'])->name('google-books.test');
+    Route::post('/google-books/search', [GoogleBooksController::class, 'search'])->name('google-books.search');
+
     Route::patch('/requisicoes/{id}/devolver', [RequisicaoController::class, 'devolver'])->name('requisicoes.devolver');
     Route::get('/requisicoes/search', [RequisicaoController::class, 'search'])->name('requisicoes.search');
+
 
     Route::get('/livros/create', [LivroController::class, 'create']);
     Route::post('/livros', [LivroController::class, 'store']);

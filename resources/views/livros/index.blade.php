@@ -41,19 +41,19 @@
 
     <div class="w-full max-w-7xl mx-auto px-4 mt-6">
         <div class="overflow-x-auto border rounded bg-white">
-            <table class="w-full border-collapse">
+            <table class="w-full border-collapse text-center">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="p-2 border text-left">ISBN</th>
-                        <th class="p-2 border text-left">Nome</th>
-                        <th class="p-2 border text-left">Autor(es)</th>
-                        <th class="p-2 border text-left">Editora</th>
-                        {{-- <th class="p-2 border text-left">Bibliografia</th> --}}
-                        <th class="p-2 border text-right">Preço</th>
-                        <th class="p-2 border text-left">Disponibilidade</th>
-                        <th class="p-2 border text-center">Imagem</th>
+                        <th class="p-2 border">ISBN</th>
+                        <th class="p-2 border">Nome</th>
+                        <th class="p-2 border">Autor(es)</th>
+                        <th class="p-2 border">Editora</th>
+                        {{-- <th class="p-2 border">Bibliografia</th> --}}
+                        <th class="p-2 border">Preço</th>
+                        <th class="p-2 border">Disponibilidade</th>
+                        <th class="p-2 border">Imagem</th>
                         @if(auth()->user()->isAdmin())
-                            <th class="p-2 border text-center">Ações</th>
+                            <th class="p-2 border">Ações</th>
                         @endif
 
                     </tr>
