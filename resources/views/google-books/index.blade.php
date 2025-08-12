@@ -16,6 +16,7 @@
                    name="query"
                    placeholder="Ex: Harry Potter, Stephen King, isbn:123456"
                    class="flex-1 border rounded px-3 py-2"
+                   value="{{$query ?? ""}}"
                    required>
             <button type="submit" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                 Pesquisar
@@ -26,6 +27,52 @@
         <p class="mt-4 text-sm text-red-600">{{ $message }}</p>
         @enderror
     </div>
+
+    @if(isset($books) && count($books) > 0)
+        <div class="space-y-4">
+            @foreach($books as $book)
+                <div class="bg-white p-4 rounded shadow flex gap-4">
+                    {{-- Imagem do livro --}}
+                    @if($book['thumbnail'])
+                        <img src="{{ $book['thumbnail'] }}"
+                             alt="{{ $book['title'] }}"
+                             class="w-16 h-24 object-cover rounded">
+                    @endif
+
+                    {{-- Informações do livro --}}
+                    <div class="flex-1">
+                        <h4 class="font-bold text-lg">{{ $book['title'] }}</h4>
+
+                        @if(!empty($book['authors']))
+                            <p class="text-gray-600">
+                                <strong>Autor(es):</strong> {{ implode(', ', $book['authors']) }}
+                            </p>
+                        @endif
+
+                        @if($book['publisher'])
+                            <p class="text-gray-600">
+                                <strong>Editora:</strong> {{ $book['publisher'] }}
+                            </p>
+                        @endif
+
+                        @if($book['description'])
+                            <p class="text-gray-700 text-sm mt-2">
+                                {{ Str::limit($book['description'], 150) }}
+                            </p>
+                        @endif
+                    </div>
+
+                    {{-- Botão (por agora só visual) --}}
+                    <div class="flex items-center">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                            Ver Detalhes
+                        </button>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+
 
     {{-- Botão de teste --}}
     <div class="bg-gray-50 p-6 rounded shadow">
@@ -38,7 +85,7 @@
 
         @if(isset($result))
             <div class="bg-green-400 p-4 rounded mb-6">
-                <strong>Resultado:</strong> {{ $result }}
+                <strong>Resultado:</strong> {!! $result !!}
             </div>
         @endif
 

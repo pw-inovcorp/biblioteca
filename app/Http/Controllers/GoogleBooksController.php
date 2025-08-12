@@ -10,6 +10,7 @@ class GoogleBooksController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         //
@@ -42,17 +43,33 @@ class GoogleBooksController extends Controller
 
         try {
             $service = new GoogleBooksService();
-
             $query = request('query');
-            return view('google-books/index', [
-                'result' => "Pesquisaste por: {$query}"
+
+            // Buscar livros da API
+            $books = $service->searchBooks($query);
+
+            if (empty($books)) {
+                return view('google-books/index', [
+                    'result' => 'ERRO: Nenhum resultado encontrado',
+                    'books' => []
+                ]);
+            }
+
+            //Exibir
+            return view('google-books.index', [
+                'result' => "Pesquisaste por: <strong>$query</strong> - Encontrados " . count($books) . " livros:",
+                'books' => $books,
+                'query' => $query
             ]);
+
 
         } catch (\Exception $e) {
             return view('google-books/index', [
-                'result' => 'ERRO na pesquisa: ' . $e->getMessage()
+                'result' => 'ERRO na pesquisa: ' . $e->getMessage(),
+                'books' => []
             ]);
         }
+
     }
 
     /**
