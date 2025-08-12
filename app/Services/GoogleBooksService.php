@@ -49,6 +49,7 @@ class GoogleBooksService
     public function searchBooks(string $query, int $maxResults = 6) : array
     {
 //        Campos relevantes do googlebooks:
+//        -industryIdentifiers['identifier']
 //        -title,
 //        -authors,
 //        -publisher,
@@ -80,12 +81,25 @@ class GoogleBooksService
                 foreach ($data['items'] as $book) {
                     $volumeInfo = $book['volumeInfo'] ?? [];
 
+                    //Encontrar ISBN
+                    $isbn = null;
+                    if(isset($volumeInfo['industryIdentifiers'])) {
+                        foreach ($volumeInfo['industryIdentifiers'] as $identifier) {
+                            if (in_array($identifier['type'], ['ISBN_13', 'ISBN_10'] )) {
+                                $isbn = $identifier['identifier'];
+                                break;
+                            }
+                        }
+                    }
+
                     $books[] = [
+                        'google_id' => $book['id'] ?? null,
                         'title' => $volumeInfo['title'] ?? 'Titulo não disponível',
                         'authors' => $volumeInfo['authors'] ?? [],
                         'publisher' => $volumeInfo['publisher'] ?? null,
                         'description' => $volumeInfo['description'] ?? null,
                         'thumbnail' => $volumeInfo['imageLinks']['thumbnail'] ?? null,
+                        'isbn' => $isbn
                     ];
                 }
                 return $books;

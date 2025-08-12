@@ -12,6 +12,7 @@
 
         <form method="POST" action="{{ route('google-books.search') }}" class="flex gap-4">
             @csrf
+
             <input type="text"
                    name="query"
                    placeholder="Ex: Harry Potter, Stephen King, isbn:123456"
@@ -60,6 +61,25 @@
                                 {{ Str::limit($book['description'], 150) }}
                             </p>
                         @endif
+                    </div>
+
+                    <div class="flex items-center">
+                        <form method="POST" action="{{ route('google-books.store') }}">
+                            @csrf
+                            <input type="hidden" name="google_id" value="{{ $book['google_id'] }}">
+                            <input type="hidden" name="title" value="{{ $book['title'] }}">
+                            <input type="hidden" name="authors" value="{{ json_encode($book['authors']) }}">
+                            <input type="hidden" name="publisher" value="{{ $book['publisher'] }}">
+                            <input type="hidden" name="description" value="{{ $book['description'] }}">
+                            <input type="hidden" name="thumbnail" value="{{ $book['thumbnail'] }}">
+                            <input type="hidden" name="isbn" value="{{ $book['isbn'] }}">
+
+                            <button type="submit"
+                                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                                    onclick="return confirm('Importar este livro para a biblioteca?')">
+                                Importar
+                            </button>
+                        </form>
                     </div>
 
                     {{-- Botão (por agora só visual) --}}
