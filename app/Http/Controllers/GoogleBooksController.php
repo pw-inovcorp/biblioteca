@@ -55,7 +55,8 @@ class GoogleBooksController extends Controller
             if (empty($books)) {
                 return view('google-books/index', [
                     'result' => 'ERRO: Nenhum resultado encontrado',
-                    'books' => []
+                    'books' => [],
+                    'query' => $query
                 ]);
             }
 
@@ -70,7 +71,8 @@ class GoogleBooksController extends Controller
         } catch (\Exception $e) {
             return view('google-books/index', [
                 'result' => 'ERRO na pesquisa: ' . $e->getMessage(),
-                'books' => []
+                'books' => [],
+                'query' => request('query', '')
             ]);
         }
 

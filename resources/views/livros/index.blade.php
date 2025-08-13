@@ -77,7 +77,7 @@
                             {{ $livro->editor?->name ?? 'Sem editora' }}
                         </td>
                         {{-- <td class="p-2 border">{{ $livro->bibliography }}</td> --}}
-                        <td class="p-2 border text-center">€ {{ $livro->price }}</td>
+                        <td class="p-2 border text-center">{{ $livro->price }} €</td>
                         <td class="p-2 border text-center">
                             @if($livro->estaDisponivel())
                                 <span class="text-green-600 font-semibold">Disponível</span>

@@ -5,13 +5,28 @@
         </h2>
     </x-slot>
 
+    @if(session('success'))
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                {{ session('error') }}
+            </div>
+        </div>
+    @endif
+
 
     {{-- Formulário de pesquisa --}}
     <div class="bg-white p-6 rounded shadow mb-6">
         <h3 class="text-lg font-semibold mb-4">Pesquisar Livros</h3>
 
-        <form method="POST" action="{{ route('google-books.search') }}" class="flex gap-4">
-            @csrf
+        <form method="GET" action="{{ route('google-books.search') }}" class="flex gap-4">
 
             <input type="text"
                    name="query"
@@ -53,6 +68,12 @@
                         @if($book['publisher'])
                             <p class="text-gray-600">
                                 <strong>Editora:</strong> {{ $book['publisher'] }}
+                            </p>
+                        @endif
+
+                        @if($book['isbn'])
+                            <p class="text-gray-600">
+                                <strong>ISBN:</strong> {{ $book['isbn'] }}
                             </p>
                         @endif
 

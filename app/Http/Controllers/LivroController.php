@@ -15,7 +15,7 @@ class LivroController extends Controller
     //
     public function index()
     {
-        $livros = Livro::with('editor', 'autores')->simplePaginate(6);
+        $livros = Livro::with('editor', 'autores')->orderBy('created_at', 'desc')->simplePaginate(6);
         return view('livros.index', ['livros' => $livros]);
     }
 
@@ -35,7 +35,7 @@ class LivroController extends Controller
             'autores.*' => 'exists:autores,id',
             'bibliography' => 'required|string|max:1000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'required|integer|min:0'
+            'price' => 'required|numeric|min:0'
         ]);
 
         if (request()->hasFile('image')) {
@@ -72,7 +72,7 @@ class LivroController extends Controller
             'autores.*' => 'exists:autores,id',
             'bibliography' => 'required|string|max:1000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'required|integer|min:0'
+            'price' => 'required|numeric|min:0'
         ]);
 
         if(request()->hasFile('image')) {
@@ -102,7 +102,7 @@ class LivroController extends Controller
         ->orderBy('name')
         ->simplePaginate(6)
         ->withQueryString();
-        
+
         return view('livros/index', compact('livros', 'search'));
     }
 
