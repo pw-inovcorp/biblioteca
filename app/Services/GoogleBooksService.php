@@ -46,7 +46,7 @@ class GoogleBooksService
         }
     }
 
-    public function searchBooks(string $query, int $maxResults = 6) : array
+    public function searchBooks(string $query, int $maxResults = 6, int $startIndex = 0) : array
     {
 //        Campos relevantes do googlebooks:
 //        -industryIdentifiers['identifier']
@@ -65,6 +65,7 @@ class GoogleBooksService
             $response = \Http::get($this->baseUrl, [
                 'q' => $query,
                 'maxResults' => $maxResults,
+                'startIndex' => $startIndex,
                 'key' => $this->apiKey,
             ]);
 

@@ -10,7 +10,7 @@ class AutorController extends Controller
     //
     public function index()
     {
-        $autores = \App\Models\Autor::simplePaginate(6);
+        $autores = Autor::orderBy('created_at', 'desc')->simplePaginate(6);
         return view('autores/index', ['autores' => $autores]);
     }
 
@@ -79,7 +79,7 @@ class AutorController extends Controller
         ->orderBy('name')
         ->simplePaginate(6)
         ->withQueryString();
-        
+
         return view('autores/index', compact('autores', 'search'));
     }
 }

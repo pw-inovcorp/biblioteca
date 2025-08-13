@@ -130,4 +130,21 @@
             </div>
         @endif
 
+    <div class="flex justify-center gap-4 mt-6">
+        @if($page > 1)
+            <a href="{{ route('google-books.search', ['query' => $query, 'page' => $page - 1]) }}"
+               class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                <- Anterior
+            </a>
+        @endif
+
+            {{-- Paginação --}}
+        @if(count($books) == $maxResults)
+                <a href="{{ route('google-books.search', ['query' => $query, 'page' => $page + 1]) }}"
+                   class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                    Próximo ->
+                </a>
+        @endif
+    </div>
+
 </x-app-layout>

@@ -10,7 +10,7 @@ class EditorController extends Controller
     //
     public function index()
     {
-        $editoras = \App\Models\Editor::paginate(6);
+        $editoras = Editor::orderBy('created_at', 'desc')->paginate(6);
         return view('editoras/index', ['editoras' => $editoras]);
     }
 

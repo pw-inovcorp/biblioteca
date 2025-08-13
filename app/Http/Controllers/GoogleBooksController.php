@@ -49,22 +49,32 @@ class GoogleBooksController extends Controller
             $service = new GoogleBooksService();
             $query = request('query');
 
-            // Buscar livros da API
-            $books = $service->searchBooks($query);
+            // Página atual (se não vier, é 1)
+            $page = (int) request('page', 1);
+            $maxResults = 6;
+            $startIndex = ($page - 1) * $maxResults;
+
+            // Buscar livros da API com paginação
+            $books = $service->searchBooks($query, $maxResults, $startIndex);
+
 
             if (empty($books)) {
                 return view('google-books/index', [
                     'result' => 'ERRO: Nenhum resultado encontrado',
                     'books' => [],
-                    'query' => $query
+                    'query' => $query,
+                    'page' => 1,
+                    'maxResults' => $maxResults
                 ]);
             }
 
             //Exibir
             return view('google-books.index', [
-                'result' => "Pesquisaste por: <strong>$query</strong> - Encontrados " . count($books) . " livros:",
+                'result' => "Pesquisaste por: <strong>$query</strong> - Mostrando " . count($books) . " resultados por página.",
                 'books' => $books,
-                'query' => $query
+                'query' => $query,
+                'page' => $page,
+                'maxResults' => $maxResults
             ]);
 
 
@@ -72,7 +82,9 @@ class GoogleBooksController extends Controller
             return view('google-books/index', [
                 'result' => 'ERRO na pesquisa: ' . $e->getMessage(),
                 'books' => [],
-                'query' => request('query', '')
+                'query' => request('query', ''),
+                'page' => 1,
+                'maxResults' => $maxResults
             ]);
         }
 
