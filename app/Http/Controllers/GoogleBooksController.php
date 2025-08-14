@@ -21,23 +21,23 @@ class GoogleBooksController extends Controller
         return view('google-books/index');
     }
 
-    public function test()
-    {
-        try {
-            $service = new GoogleBooksService();
-
-            $apiTest = $service->testAPI();
-
-            return view('google-books/index', [
-                'result' => "API: $apiTest"
-            ]);
-
-        } catch (\Exception $e) {
-            return view('google-books/index', [
-                'result' => 'ERRO: ' . $e->getMessage()
-            ]);
-        }
-    }
+//    public function test()
+//    {
+//        try {
+//            $service = new GoogleBooksService();
+//
+//            $apiTest = $service->testAPI();
+//
+//            return view('google-books/index', [
+//                'result' => "API: $apiTest"
+//            ]);
+//
+//        } catch (\Exception $e) {
+//            return view('google-books/index', [
+//                'result' => 'ERRO: ' . $e->getMessage()
+//            ]);
+//        }
+//    }
 
     public function search()
     {
@@ -69,7 +69,7 @@ class GoogleBooksController extends Controller
             }
 
             //Exibir
-            return view('google-books.index', [
+            return view('google-books/index', [
                 'result' => "Pesquisaste por: <strong>$query</strong> - Mostrando " . count($books) . " resultados por página.",
                 'books' => $books,
                 'query' => $query,
@@ -149,10 +149,16 @@ class GoogleBooksController extends Controller
                 $livro->autores()->attach($autor->id);
             }
 
-            return back()->with('success', "Livro '{$livro->name}' importado com sucesso!");
+            return redirect()->route('google-books.search', [
+                'query' => request('original_query'),
+                'page' => request('original_page')
+            ])->with('success', "Livro '{$livro->name}' importado com sucesso!");
 
         }catch (\Exception $e) {
-            return back()->with('error', 'Erro ao importar: ' . $e->getMessage());
+            return redirect()->route('google-books.search', [
+                'query' => request('original_query'),
+                'page' => request('original_page')
+            ])->with('error', 'Erro ao importar: ' . $e->getMessage());
         }
 
     }
@@ -160,9 +166,21 @@ class GoogleBooksController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         //
+        $book = [
+            'google_id' => request('google_id'),
+            'title' => request('title'),
+            'authors' => json_decode(request('authors'), true),
+            'publisher' => request('publisher'),
+            'description' => request('description'),
+            'thumbnail' => request('thumbnail'),
+            'isbn' => request('isbn')
+        ];
+
+        return view('google-books/show', ['book' => $book]);
+
     }
 
     /**

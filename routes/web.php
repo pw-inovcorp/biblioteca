@@ -40,8 +40,9 @@ Route::middleware(['auth', 'admin'])->group(function() {
     // Admin CRUD
 
     Route::get('/google-books', [GoogleBooksController::class, 'index'])->name('google-books.index');
-    Route::get('/google-books/test', [GoogleBooksController::class, 'test'])->name('google-books.test');
+//  Route::get('/google-books/test', [GoogleBooksController::class, 'test'])->name('google-books.test');
     Route::get('/google-books/search', [GoogleBooksController::class, 'search'])->name('google-books.search');
+    Route::post('google-books/show', [GoogleBooksController::class, 'show'])->name('google-books.show');
     Route::post('/google-books/store', [GoogleBooksController::class, 'store'])->name('google-books.store');
 
 

@@ -38,6 +38,12 @@
                         {{ __('Editoras') }}
                     </x-nav-link>
 
+                    @if(auth()->user()->isAdmin())
+                        <x-nav-link href="{{ url('/google-books') }}" :active="request()->is('google-books')">
+                            {{ __('Importar') }}
+                        </x-nav-link>
+                    @endif
+
                 </div>
 
             </div>

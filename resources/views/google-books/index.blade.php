@@ -105,24 +105,57 @@
 
                     {{-- Botão (por agora só visual) --}}
                     <div class="flex items-center">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                            Ver Detalhes
-                        </button>
+                        <form method="POST" action="{{ route('google-books.show') }}">
+                            @csrf
+                            <input type="hidden" name="google_id" value="{{ $book['google_id'] }}">
+                            <input type="hidden" name="title" value="{{ $book['title'] }}">
+                            <input type="hidden" name="authors" value="{{ json_encode($book['authors']) }}">
+                            <input type="hidden" name="publisher" value="{{ $book['publisher'] }}">
+                            <input type="hidden" name="description" value="{{ $book['description'] }}">
+                            <input type="hidden" name="thumbnail" value="{{ $book['thumbnail'] }}">
+                            <input type="hidden" name="isbn" value="{{ $book['isbn'] }}">
+
+                            <input type="hidden" name="original_query" value="{{ $query ?? '' }}">
+                            <input type="hidden" name="original_page" value="{{ $page ?? 1 }}">
+
+                            <button type="submit"
+                                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                Ver Detalhes
+                            </button>
+                        </form>
                     </div>
                 </div>
             @endforeach
         </div>
+
+{{--        Paginação--}}
+        <div class="flex justify-center gap-4 mt-6 mb-6">
+            @if($page > 1)
+                <a href="{{ route('google-books.search', ['query' => $query, 'page' => $page - 1]) }}"
+                   class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                    <- Anterior
+                </a>
+            @endif
+
+            {{-- Paginação --}}
+            @if(count($books) == $maxResults)
+                <a href="{{ route('google-books.search', ['query' => $query, 'page' => $page + 1]) }}"
+                   class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+                    Próximo ->
+                </a>
+            @endif
+        </div>
     @endif
 
 
-    {{-- Botão de teste --}}
-    <div class="bg-gray-50 p-6 rounded shadow">
-        <h4 class="font-semibold mb-3">Teste da API</h4>
-        <a href="{{ route('google-books.test') }}"
-           class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            Testar API
-        </a>
-    </div>
+{{--    --}}{{-- Botão de teste --}}
+{{--    <div class="bg-gray-50 p-6 rounded shadow">--}}
+{{--        <h4 class="font-semibold mb-3">Teste da API</h4>--}}
+{{--        <a href="{{ route('google-books.test') }}"--}}
+{{--           class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">--}}
+{{--            Testar API--}}
+{{--        </a>--}}
+{{--    </div>--}}
 
         @if(isset($result))
             <div class="bg-green-400 p-4 rounded mb-6">
@@ -130,21 +163,6 @@
             </div>
         @endif
 
-    <div class="flex justify-center gap-4 mt-6">
-        @if($page > 1)
-            <a href="{{ route('google-books.search', ['query' => $query, 'page' => $page - 1]) }}"
-               class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
-                <- Anterior
-            </a>
-        @endif
 
-            {{-- Paginação --}}
-        @if(count($books) == $maxResults)
-                <a href="{{ route('google-books.search', ['query' => $query, 'page' => $page + 1]) }}"
-                   class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
-                    Próximo ->
-                </a>
-        @endif
-    </div>
 
 </x-app-layout>

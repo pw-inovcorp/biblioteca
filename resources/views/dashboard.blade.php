@@ -77,7 +77,7 @@
                 {{-- Ações rápidas --}}
                 <div class="box">
                     <div class="title">Ações Rápidas</div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <a href="{{ route('livros.index') }}" class="text-white text-center p-3 rounded" style="background: royalblue;">
                             Ver Catálogo
                         </a>
@@ -87,6 +87,12 @@
                         <a href="{{ route('profile.show') }}" class="text-white text-center p-3 rounded" style="background: grey;">
                             Meu Perfil
                         </a>
+
+                        @if(auth()->user()->isAdmin())
+                            <a href="{{ route('google-books.index') }}" class="text-white text-center p-3 rounded" style="background: saddlebrown;">
+                                Importar Livros
+                            </a>
+                        @endif
                     </div>
                 </div>
 
