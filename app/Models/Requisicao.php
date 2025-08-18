@@ -78,6 +78,12 @@ class Requisicao extends Model
         return $this->belongsTo(Livro::class);
     }
 
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
+
+
     //Geracao automatico de numero de requisicao
     public static function generateNumeroRequisicao(): string
     {
@@ -100,6 +106,12 @@ class Requisicao extends Model
             return $this->data_requisicao->diffInDays($this->data_real_entrega);
         }
         return $this->data_requisicao->diffInDays(Carbon::today());
+    }
+
+    // Verificar se esta requisição já tem review
+    public function temReview(): bool
+    {
+        return $this->review()->exists();
     }
 
     // Scopes

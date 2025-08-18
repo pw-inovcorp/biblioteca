@@ -46,7 +46,8 @@ class Livro extends Model
         'editor_id',
         'bibliography',
         'image',
-        'price'
+        'price',
+        'google_books_id'
     ];
 
     //Relações
@@ -64,14 +65,19 @@ class Livro extends Model
         return $this->hasMany(Requisicao::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 
-    //Verificar se está disponivl
+
+
+    //Scopes
     public function estaDisponivel(): bool
     {
         return $this->requisicoes()->ativas()->exists() === false;
     }
 
-    //Pegar no primeiro livro (se existir disponivel)
     public function requisicaoAtiva(): ?Requisicao
     {
         return $this->requisicoes()->ativas()->first();

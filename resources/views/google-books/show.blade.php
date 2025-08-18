@@ -8,14 +8,14 @@
     <div class="max-w-4xl mx-auto">
         <div class="bg-white rounded shadow p-6">
             <div class="md:flex gap-6">
-{{--                 Imagem --}}
+                {{--Imagem --}}
                 <div class="md:w-1/3 mb-4 md:mb-0">
                     @if($book['thumbnail'])
                         <img src="{{ $book['thumbnail'] }}" alt="{{ $book['title'] }}" class="w-full rounded">
                     @endif
                 </div>
 
-{{--                 Informações --}}
+                {{--Informações --}}
                 <div class="md:w-2/3">
                     <h1 class="text-2xl font-bold mb-4">{{ $book['title'] }}</h1>
 
@@ -43,7 +43,7 @@
                         @endif
                     </div>
 
-{{--                     Botões --}}
+                    {{--Botões --}}
                     <div class="flex gap-4 mt-6">
                         <button onclick="history.back()" class="bg-gray-500 text-white px-4 py-2 rounded">
                             Voltar

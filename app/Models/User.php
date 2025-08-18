@@ -84,8 +84,13 @@ class User extends Authenticatable
     }
 
     public function requisicoes() {
-        
+
         return $this->hasMany(Requisicao::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
     //Permissões

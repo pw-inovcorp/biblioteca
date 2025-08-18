@@ -95,6 +95,7 @@ class GoogleBooksController extends Controller
      */
     public function store()
     {
+
         //livros antigos podem nao ter campos em editor, bibliografia e isbn
         request()->validate([
             'google_id' => 'required|string',
@@ -129,7 +130,6 @@ class GoogleBooksController extends Controller
 
             $livro = Livro::create([
                 'google_books_id' => request('google_id'),
-                'source' => 'google_books',
                 'name' => request('title'),
                 'isbn' => request('isbn') ?? 'google-' . request('google_id'), // ISBN falso se null
                 'editor_id' => $editor->id,

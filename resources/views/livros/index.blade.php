@@ -52,10 +52,7 @@
                         <th class="p-2 border">Preço</th>
                         <th class="p-2 border">Disponibilidade</th>
                         <th class="p-2 border">Imagem</th>
-                        @if(auth()->user()->isAdmin())
                             <th class="p-2 border">Ações</th>
-                        @endif
-
                     </tr>
                 </thead>
                 <tbody>
@@ -95,11 +92,22 @@
                                 class="mx-auto rounded-lg mt-2 object-cover shadow-md" style="max-width: 250px; max-height: 250px;" />
                         </td>
 
-                        @if(auth()->check() && auth()->user()->isAdmin())
-                            <td> <a href="/livros/{{ $livro->id }}/edit" class="p-2 text-gray-400 font-bold underline" type="button">
-                                    Editar</a>
+
+                            <td>
+                                <div class="flex flex-col gap-2 items-center">
+                                    <a href="{{ route('livros.show', $livro->id) }}"
+                                       class="text-blue-600 hover:text-blue-800 underline text-sm">
+                                        Ver Detalhes
+                                    </a>
+
+                                    @if(auth()->check() && auth()->user()->isAdmin())
+                                        <a href="/livros/{{ $livro->id }}/edit"
+                                           class="text-gray-600 hover:text-gray-800 underline text-sm">
+                                            Editar
+                                        </a>
+                                    @endif
+                                </div>
                             </td>
-                        @endif
                     </tr>
                     @endforeach
                 </tbody>

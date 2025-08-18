@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
     //Apenas visualização --para cidadao e admin
     Route::get('/livros', [LivroController::class, 'index'])->name('livros.index');
     Route::get('/livros/search', [LivroController::class, 'search'])->name('livros.search');
+    Route::get('livros/show/{livro}', [LivroController::class, 'show'])->name('livros.show');
     Route::get('/download', [LivroController::class, 'export']);
 
     Route::get('/editoras', [EditorController::class, 'index']);
@@ -52,7 +53,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
 
     Route::get('/livros/create', [LivroController::class, 'create']);
     Route::post('/livros', [LivroController::class, 'store']);
-    Route::get('/livros/{id}/edit', [LivroController::class, 'edit']);
+    Route::get('/livros/{id}/edit', [LivroController::class, 'edit'])->name('livros.edit');
     Route::patch('/livros/{id}', [LivroController::class, 'update']);
     Route::delete('/livros/{id}', [LivroController::class, 'destroy']);
 

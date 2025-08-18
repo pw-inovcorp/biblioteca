@@ -19,6 +19,24 @@ class LivroController extends Controller
         return view('livros.index', ['livros' => $livros]);
     }
 
+    public function show($id)
+    {
+        $livro = Livro::with('editor', 'autores')
+            ->findOrFail($id);
+
+        // Verificar se o usuário atual pode requisitar este livro
+        $podeRequisitar = false;
+        if (auth()->check()) {
+            $podeRequisitar = $livro->estaDisponivel() &&
+                auth()->user()->podeRequisitarMaisLivros();
+        }
+
+        return view('livros/show', [
+            'livro' => $livro,
+            'podeRequisitar' => $podeRequisitar
+        ]);
+    }
+
     public function create()
     {
         $editoras = \App\Models\Editor::orderBy('name')->get();
@@ -33,7 +51,7 @@ class LivroController extends Controller
             'editor_id' => 'required|exists:editors,id',
             'autores' => 'required|array',
             'autores.*' => 'exists:autores,id',
-            'bibliography' => 'required|string|max:1000',
+            'bibliography' => 'required|string|max:2000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required|numeric|min:0'
         ]);
@@ -70,7 +88,7 @@ class LivroController extends Controller
             'editor_id' => 'required|exists:editors,id',
             'autores' => 'required|array',
             'autores.*' => 'exists:autores,id',
-            'bibliography' => 'required|string|max:1000',
+            'bibliography' => 'required|string|max:2000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required|numeric|min:0'
         ]);
