@@ -10,6 +10,7 @@ use App\Http\Controllers\LivroController;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\RequisicaoController;
 use App\Models\Requisicao;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -34,6 +35,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/requisicoes/create/{livro}', [RequisicaoController::class, 'create'])->name('requisicoes.create');
     Route::post('/requisicoes', [RequisicaoController::class, 'store'])->name('requisicoes.store');
 
+    Route::get('/reviews/create/{requisicaoId}', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {
@@ -43,8 +47,8 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/google-books', [GoogleBooksController::class, 'index'])->name('google-books.index');
 //  Route::get('/google-books/test', [GoogleBooksController::class, 'test'])->name('google-books.test');
     Route::get('/google-books/search', [GoogleBooksController::class, 'search'])->name('google-books.search');
-    Route::post('google-books/show', [GoogleBooksController::class, 'show'])->name('google-books.show');
-    Route::post('/google-books/store', [GoogleBooksController::class, 'store'])->name('google-books.store');
+    Route::post('/google-books/show', [GoogleBooksController::class, 'show'])->name('google-books.show');
+    Route::post('/google-books', [GoogleBooksController::class, 'store'])->name('google-books.store');
 
 
     Route::patch('/requisicoes/{id}/devolver', [RequisicaoController::class, 'devolver'])->name('requisicoes.devolver');

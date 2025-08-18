@@ -65,9 +65,7 @@
                         <th class="p-2 border text-center">Data Requisição</th>
                         <th class="p-2 border text-center">Devolução Prevista</th>
                         <th class="p-2 border text-center">Status</th>
-                        @if(auth()->user()->isAdmin())
-                            <th class="p-2 border text-center">Ações</th>
-                        @endif
+                        <th class="p-2 border text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,8 +94,23 @@
                             @endif
                         </td>
 
+
+                            {{-- Botão Fazer Review apenas para cidadãos --}}
+                            @if(auth()->user()->isCidadao() && !$requisicao->temReview())
+                                <td class="p-2 border">
+                                    <a href="{{ route('reviews.create', $requisicao->id) }}"
+                                           class="text-gray underline">
+                                        Fazer Review
+                                    </a>
+                                </td>
+                            @elseif(auth()->user()->isCidadao() && $requisicao->temReview())
+                                <td class="p-2 border">
+                                    <span class="text-sm text-gray-500">Review feito</span>
+                                </td>
+                            @endif
+
                             @if(auth()->user()->isAdmin() && $requisicao->status === "ativa")
-                                <td>
+                                <td class="p-2 border">
                                     <form method="POST" action="{{ route('requisicoes.devolver', $requisicao->id) }}">
                                     @csrf
                                     @method('PATCH')
