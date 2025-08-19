@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Review;
 use App\Models\User;
 use App\Models\Requisicao;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NovaReviewAdminMail;
+use App\Mail\RespostaReviewMail;
 
 class ReviewController extends Controller
 {
@@ -46,6 +49,9 @@ class ReviewController extends Controller
             'status' => 'ativo',
         ]);
 
+        // Enviar email ao cidadão
+        Mail::to($review->user->email)->send(new RespostaReviewMail($review));
+
         return redirect()->route('reviews.index')
             ->with('success', 'Review aprovado com sucesso!');
     }
@@ -66,6 +72,9 @@ class ReviewController extends Controller
             'status' => 'recusado',
             'justificacao_recusa' => request()->justificacao_recusa
         ]);
+
+        // Enviar email ao cidadão
+        Mail::to($review->user->email)->send(new RespostaReviewMail($review));
 
         return redirect()->route('reviews.index')
             ->with('success', 'Review recusado com justificação.');
@@ -107,13 +116,23 @@ class ReviewController extends Controller
         }
 
         // Criar review com status 'suspenso'
-        Review::create([
+        $review = Review::create([
             'user_id' => auth()->id(),
             'livro_id' => $requisicao->livro_id,
             'requisicao_id' => $requisicao->id,
             'comment' => request()->comment,
             'status' => 'suspenso'
         ]);
+
+        // Enviar email para todos os admins
+        $admins = User::whereHas('role', function ($q) {
+            $q->where('name', 'admin');
+        })->get();
+
+        foreach ($admins as $admin) {
+            Mail::to($admin->email)->send(new NovaReviewAdminMail($review));
+        }
+
 
         return redirect()->route('requisicoes.index')
             ->with('success', 'Review enviado! Será analisado pelos administradores.');

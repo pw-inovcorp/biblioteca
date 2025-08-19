@@ -129,12 +129,34 @@
                 </div>
             </div>
 
-            {{-- Secção de Reviews (placeholder para o futuro) --}}
+            {{-- Secção de Reviews--}}
             <div class="mt-8 border-t pt-6">
                 <h3 class="text-xl font-semibold mb-4">Reviews dos Leitores</h3>
-                <div class="bg-gray-50 p-4 rounded-lg text-center">
-                    <p class="text-gray-600">Sistema de reviews será implementado em breve.</p>
-                </div>
+
+                @php
+                    $reviewsAtivos = $livro->reviews()->where('status', 'ativo')->with('user')->latest()->get();
+                @endphp
+
+                @if($reviewsAtivos->count() > 0)
+                    <div class="space-y-4">
+                        @foreach($reviewsAtivos as $review)
+                            <div class="bg-gray-50 p-4 rounded-lg border">
+                                <div class="mb-2">
+                                    <div>
+                                        <p class="font-semibold text-gray-800">{{ $review->user->name }}</p>
+                                        <p class="text-sm text-gray-600">{{ $review->created_at->format('d/m/Y') }}</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700">{{ $review->comment }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="bg-gray-50 p-4 rounded-lg text-center">
+                        <p class="text-gray-600">Ainda não há reviews para este livro.</p>
+                        <p class="text-sm text-gray-500 mt-1">Seja o primeiro a fazer review depois de requisitar!</p>
+                    </div>
+                @endif
             </div>
 
         </div>

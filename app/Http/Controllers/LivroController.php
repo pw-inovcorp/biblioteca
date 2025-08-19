@@ -21,7 +21,7 @@ class LivroController extends Controller
 
     public function show($id)
     {
-        $livro = Livro::with('editor', 'autores')
+        $livro = Livro::with('editor', 'autores','reviews.user')
             ->findOrFail($id);
 
         // Verificar se o usuário atual pode requisitar este livro
