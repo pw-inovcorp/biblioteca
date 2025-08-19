@@ -42,6 +42,10 @@
                         <x-nav-link href="{{ url('/google-books') }}" :active="request()->is('google-books')">
                             {{ __('Importar') }}
                         </x-nav-link>
+
+                        <x-nav-link href="{{ route('reviews.index') }}" :active="request()->is('reviews')">
+                            {{ __('Reviews') }}
+                        </x-nav-link>
                     @endif
 
                 </div>

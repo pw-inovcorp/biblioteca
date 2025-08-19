@@ -22,7 +22,7 @@ Route::middleware(['auth'])->group(function () {
     //Apenas visualização --para cidadao e admin
     Route::get('/livros', [LivroController::class, 'index'])->name('livros.index');
     Route::get('/livros/search', [LivroController::class, 'search'])->name('livros.search');
-    Route::get('livros/show/{livro}', [LivroController::class, 'show'])->name('livros.show');
+    Route::get('livros/show/{id}', [LivroController::class, 'show'])->name('livros.show');
     Route::get('/download', [LivroController::class, 'export']);
 
     Route::get('/editoras', [EditorController::class, 'index']);
@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/requisicoes/create/{livro}', [RequisicaoController::class, 'create'])->name('requisicoes.create');
     Route::post('/requisicoes', [RequisicaoController::class, 'store'])->name('requisicoes.store');
 
-    Route::get('/reviews/create/{requisicaoId}', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::get('/reviews/create/{requisicao}', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 });
@@ -43,6 +43,13 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'admin'])->group(function() {
 
     // Admin CRUD
+
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+    Route::get('/reviews/show/{id}', [ReviewController::class, 'show'])->name('reviews.show');
+    Route::patch('/reviews/{id}/aprovar', [ReviewController::class, 'aprovar'])->name('reviews.aprovar');
+    Route::patch('/reviews/{id}/recusar', [ReviewController::class, 'recusar'])->name('reviews.recusar');
+
+
 
     Route::get('/google-books', [GoogleBooksController::class, 'index'])->name('google-books.index');
 //  Route::get('/google-books/test', [GoogleBooksController::class, 'test'])->name('google-books.test');
