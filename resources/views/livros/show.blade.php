@@ -111,6 +111,24 @@
                                 <span class="bg-red-500 text-white px-4 py-2 rounded opacity-75 cursor-not-allowed">
                                     Livro Indisponível
                                 </span>
+
+
+                                @php
+                                    $temAlerta = auth()->check() && auth()->user()->alertas()->where('livro_id', $livro->id)->exists();
+                                @endphp
+
+                                @if(!$temAlerta)
+                                    <form method="POST" class="inline">
+                                        @csrf
+                                        <input type="hidden" name="livro_id" value="{{ $livro->id }}">
+                                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                            Receber Alerta
+                                        </button>
+                                    </form>
+                                @else
+                                    <span class="bg-yellow-500 text-white px-4 py-2 rounded">Alerta Ativo</span>
+                                @endif
+
                             @elseif(!auth()->user()->podeRequisitarMaisLivros())
                                 <span class="bg-yellow-500 text-white px-4 py-2 rounded opacity-75 cursor-not-allowed"
                                       title="Já tem 3 livros requisitados">

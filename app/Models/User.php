@@ -93,6 +93,11 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+    public function alertas()
+    {
+        return $this->hasMany(LivroAlerta::class);
+    }
+
     //Permissões
     public function isAdmin(): bool
     {

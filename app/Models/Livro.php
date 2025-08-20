@@ -70,6 +70,11 @@ class Livro extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function alertas()
+    {
+        return $this->hasMany(LivroAlerta::class);
+    }
+
 
 
     //Scopes
