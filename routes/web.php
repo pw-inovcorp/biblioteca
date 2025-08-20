@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Controllers\RequisicaoController;
 use App\Models\Requisicao;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\LivroAlertaController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -37,6 +38,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/reviews/create/{requisicao}', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+    Route::post('/alertas', [LivroAlertaController::class, 'store'])->name('alertas.store');
 
 });
 

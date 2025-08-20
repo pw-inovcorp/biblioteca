@@ -26,6 +26,6 @@ class LivroAlertaController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return back()->with('success', 'Alerta criado! Será notificado quando o livro ficar disponível.');
+        return redirect()->back()->with('success', 'Alerta criado! Será notificado quando o livro ficar disponível.');
     }
 }

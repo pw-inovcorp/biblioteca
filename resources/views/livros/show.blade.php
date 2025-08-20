@@ -118,7 +118,7 @@
                                 @endphp
 
                                 @if(!$temAlerta)
-                                    <form method="POST" class="inline">
+                                    <form method="POST" action="{{ route('alertas.store') }}" class="inline">
                                         @csrf
                                         <input type="hidden" name="livro_id" value="{{ $livro->id }}">
                                         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">

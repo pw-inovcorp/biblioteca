@@ -7,8 +7,10 @@ use App\Models\Livro;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\LivroAlerta;
 use App\Mail\NovaRequisicaoMail;
 use App\Mail\NovaRequisicaoAdminMail;
+use App\Mail\LivroDisponivelMail;
 use Illuminate\Support\Facades\Mail;
 
 class RequisicaoController extends Controller
@@ -130,7 +132,17 @@ class RequisicaoController extends Controller
         $requisicao->dias_decorridos = $requisicao->calcularDiasDecorridos();
         $requisicao->save();
 
+        //Envio de email para alertar a disponibilidade do livro
+        $alertas = $requisicao->livro->alertas()->with('user')->get();
+
+        foreach ($alertas as $alerta) {
+            Mail::to($alerta->user->email)->send(new LivroDisponivelMail($requisicao->livro, $alerta->user));
+            $alerta->delete();
+        }
+
         return redirect()->route('requisicoes.index')->with('success', 'Livro devolvido com sucesso!');
+
+        //Envio de email para alertar que o livro encontra se disponível
 
     }
     public function search() {
