@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Services\LivroSimilarityService;
 
 /**
  * @property int $id
@@ -73,6 +75,13 @@ class Livro extends Model
     public function alertas()
     {
         return $this->hasMany(LivroAlerta::class);
+    }
+
+
+    public function getLivrosSimilares(int $limit = 8): Collection
+    {
+        $similarityService = new LivroSimilarityService();
+        return $similarityService->getLivrosSimilares($this, $limit);
     }
 
 

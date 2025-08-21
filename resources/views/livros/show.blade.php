@@ -138,7 +138,7 @@
 
                             @if(auth()->user()->isAdmin())
                                 <a href="{{ route('livros.edit', $livro->id) }}"
-                                   class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                   class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">
                                     Editar Livro
                                 </a>
                             @endif
@@ -146,6 +146,94 @@
                     </div>
                 </div>
             </div>
+            {{--Livros Relacionados--}}
+            @php
+                $livrosSimilares = $livro->getLivrosSimilares(4);
+            @endphp
+
+            @if($livrosSimilares->count() > 0)
+                <div class="mt-8 border-t pt-6">
+                    <h3 class="text-xl font-semibold mb-4">Livros Relacionados</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        @foreach($livrosSimilares as $livroSimilar)
+                            <div class="bg-gray-50 rounded-lg p-4 hover:shadow-md">
+                                {{-- Imagem do livro --}}
+                                <div class="mb-3">
+                                    @if($livroSimilar->image)
+                                        @php
+                                            $isUrl = str_starts_with($livroSimilar->image, 'http');
+                                        @endphp
+                                        <img src="{{ $isUrl ? $livroSimilar->image : asset('storage/' . $livroSimilar->image) }}"
+                                             alt="{{ $livroSimilar->name }}"
+                                             class="w-full h-48 object-cover rounded shadow-sm">
+                                    @else
+                                        <div class="w-full h-48 bg-gray-200 rounded flex items-center">
+                                            <span class="text-gray-400 text-xs">Sem imagem</span>
+                                        </div>
+                                    @endif
+                                </div>
+
+                                {{-- Informações do livro --}}
+                                <div>
+                                    <h4 class="font-semibold text-sm mb-2">
+                                        {{ Str::limit($livroSimilar->name, 20) }}
+                                    </h4>
+
+                                    <p class="text-xs text-gray-600 mb-2">
+                                        @if($livroSimilar->autores->isNotEmpty())
+                                            {{ Str::limit($livroSimilar->autores->pluck('name')->join(', '), 30) }}
+                                        @else
+                                            Sem autor
+                                        @endif
+                                    </p>
+
+                                    <p class="text-xs text-gray-500 mb-3">
+                                        {{ Str::limit($livroSimilar->bibliography, 100) }}
+                                    </p>
+
+                                    <div class="mb-3">
+                                        @if($livroSimilar->estaDisponivel())
+                                            <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
+                                                Disponível
+                                            </span>
+                                        @else
+                                            <span class="inline-block bg-red-100 text-red-800 text-xs px-2 py-1 rounded">
+                                                Requisitado
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    {{-- Botão para ver detalhes --}}
+                                    <a href="{{ route('livros.show', $livroSimilar->id) }}"
+                                       class="inline-block w-full text-center bg-blue-600 text-white text-xs px-3 py-2 rounded hover:bg-blue-700">
+                                        Ver Detalhes
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    {{-- Nota explicativa --}}
+                    <div class="mt-4 bg-blue-50 border-blue-200 rounded p-3">
+                        <p class="text-xs text-blue-800">
+                            <strong>Como funciona:</strong> Os livros relacionados são sugeridos automaticamente com base na análise
+                            das descrições, encontrando livros com temáticas e palavras-chave similares.
+                        </p>
+                    </div>
+                </div>
+            @else
+                {{-- Mensagem quando não há livros similares --}}
+                <div class="mt-8 border-t pt-6">
+                    <h3 class="text-xl font-semibold mb-4">Livros Relacionados</h3>
+                    <div class="bg-gray-50 rounded-lg p-4 text-center">
+                        <p class="text-gray-600">
+                            Ainda não encontramos livros relacionados com este.
+                            Explore o nosso <a href="{{ route('livros.index') }}" class="text-blue-600 underline">catálogo completo</a>!
+                        </p>
+                    </div>
+                </div>
+            @endif
 
             {{-- Secção de Reviews--}}
             <div class="mt-8 border-t pt-6">
