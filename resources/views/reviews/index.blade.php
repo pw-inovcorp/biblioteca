@@ -13,7 +13,17 @@
         </div>
     @endif
 
-    <div class="w-full max-w-7xl mx-auto px-4">
+    {{--Barra de pesquisa--}}
+    <form action="{{ route('reviews.search') }}" method="GET">
+        <div class="text-center">
+            <input type="search" name="search" class="mr-sm-2" value="{{ $search ?? '' }}">
+            <button type="submit" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                Pesquisar
+            </button>
+        </div>
+    </form>
+
+    <div class="w-full max-w-7xl mx-auto px-4 mt-6">
         <div class="overflow-x-auto border rounded bg-white">
             <table class="w-full border-collapse text-center">
                 <thead class="bg-gray-100">

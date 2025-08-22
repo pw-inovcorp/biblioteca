@@ -138,4 +138,18 @@ class ReviewController extends Controller
             ->with('success', 'Review enviado! Será analisado pelos administradores.');
     }
 
+    public function search() {
+        $search = request()->query('search','');
+        $reviews = Review::with(['user', 'livro'])
+            ->whereHas('user', fn($q) => $q->where('name', 'like', "%{$search}%"))
+            ->orWhereHas('livro', fn($q) => $q->where('name', 'like', "%{$search}%"))
+            ->orWhere('status', 'like', "%{$search}%")
+            ->latest()
+            ->Paginate(10)
+            ->withQueryString();
+
+
+        return view('reviews/index', ['reviews' => $reviews]);
+    }
+
 }

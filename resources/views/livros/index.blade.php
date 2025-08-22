@@ -99,13 +99,6 @@
                                        class="text-blue-600 hover:text-blue-800 underline text-sm">
                                         Ver Detalhes
                                     </a>
-
-                                    @if(auth()->check() && auth()->user()->isAdmin())
-                                        <a href="/livros/{{ $livro->id }}/edit"
-                                           class="text-gray-600 hover:text-gray-800 underline text-sm">
-                                            Editar
-                                        </a>
-                                    @endif
                                 </div>
                             </td>
                     </tr>

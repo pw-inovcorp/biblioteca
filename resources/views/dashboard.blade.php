@@ -77,20 +77,24 @@
                 {{-- Ações rápidas --}}
                 <div class="box">
                     <div class="title">Ações Rápidas</div>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <a href="{{ route('livros.index') }}" class="text-white text-center p-3 rounded" style="background: royalblue;">
+                    <div class="grid grid-cols-1 md:grid-cols-{{ auth()->user()->isAdmin() ? '5' : '3' }} gap-4">
+                        <a href="{{ route('livros.index') }}" class="text-white bg-blue-500 text-center p-3 rounded hover:bg-blue-600">
                             Ver Catálogo
                         </a>
-                        <a href="{{ route('requisicoes.index') }}" class="text-white text-center p-3 rounded" style="background: forestgreen;">
+                        <a href="{{ route('requisicoes.index') }}" class="text-white bg-green-500 text-center p-3 rounded hover:bg-green-600">
                             Minhas Requisições
                         </a>
-                        <a href="{{ route('profile.show') }}" class="text-white text-center p-3 rounded" style="background: grey;">
+                        <a href="{{ route('profile.show') }}" class="text-white bg-gray-500 text-center p-3 rounded hover:bg-gray-600">
                             Meu Perfil
                         </a>
 
                         @if(auth()->user()->isAdmin())
-                            <a href="{{ route('google-books.index') }}" class="text-white text-center p-3 rounded" style="background: saddlebrown;">
+                            <a href="{{ route('google-books.index') }}" class="text-white bg-indigo-500 text-center p-3 rounded hover:bg-indigo-600">
                                 Importar Livros
+                            </a>
+
+                            <a href="{{ route('reviews.index') }}" class="text-white bg-yellow-500 text-center p-3 rounded hover:bg-yellow-600">
+                                Reviews
                             </a>
                         @endif
                     </div>

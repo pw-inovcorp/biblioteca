@@ -92,13 +92,9 @@ class LivroSimilarityService
                         fn($word) => !empty($word)
                     );
                 } else {
-                    // Fallback para algumas stopwords básicas se o ficheiro não existir
-                    dd("lolol");
                     $stopwords = ['o', 'a', 'de', 'em', 'para', 'com', 'não', 'uma', 'os', 'no', 'se'];
                 }
             } catch (\Exception $e) {
-                // Em caso de erro, usar stopwords básicas
-                dd($e->getMessage());
                 $stopwords = ['o', 'a', 'de', 'em', 'para', 'com', 'não', 'uma', 'os', 'no', 'se'];
             }
         }

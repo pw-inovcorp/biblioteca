@@ -51,6 +51,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/reviews/show/{id}', [ReviewController::class, 'show'])->name('reviews.show');
     Route::patch('/reviews/{id}/aprovar', [ReviewController::class, 'aprovar'])->name('reviews.aprovar');
     Route::patch('/reviews/{id}/recusar', [ReviewController::class, 'recusar'])->name('reviews.recusar');
+    Route::get('/reviews/search', [ReviewController::class, 'search'])->name('reviews.search');
 
 
 
