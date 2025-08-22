@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/requisicoes/create/{livro}', [RequisicaoController::class, 'create'])->name('requisicoes.create');
     Route::post('/requisicoes', [RequisicaoController::class, 'store'])->name('requisicoes.store');
 
-    Route::get('/reviews/create/{requisicao}', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::get('/reviews/create/{requisicaoId}', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
     Route::post('/alertas', [LivroAlertaController::class, 'store'])->name('alertas.store');

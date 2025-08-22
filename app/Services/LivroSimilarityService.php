@@ -81,7 +81,7 @@ class LivroSimilarityService
             try {
 
                 // Caminho absoluto para o ficheiro
-                $path = storage_path('app/private/stop-words-portugese.txt');
+                $path = storage_path('app/private/stopwords-en.txt');
 
                 if (file_exists($path)) {
                     $content = file_get_contents($path);
@@ -92,10 +92,10 @@ class LivroSimilarityService
                         fn($word) => !empty($word)
                     );
                 } else {
-                    $stopwords = ['o', 'a', 'de', 'em', 'para', 'com', 'não', 'uma', 'os', 'no', 'se'];
+                    dd('not working');
                 }
             } catch (\Exception $e) {
-                $stopwords = ['o', 'a', 'de', 'em', 'para', 'com', 'não', 'uma', 'os', 'no', 'se'];
+                dd('not working');
             }
         }
 

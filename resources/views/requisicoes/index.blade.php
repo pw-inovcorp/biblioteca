@@ -96,14 +96,14 @@
 
 
                             {{-- Botão Fazer Review apenas para cidadãos --}}
-                            @if(auth()->user()->isCidadao() && !$requisicao->temReview())
+                            @if(auth()->user()->isCidadao() && $requisicao->status === 'devolvida' && !$requisicao->temReview())
                                 <td class="p-2 border">
                                     <a href="{{ route('reviews.create', $requisicao->id) }}"
                                            class="text-gray underline">
                                         Fazer Review
                                     </a>
                                 </td>
-                            @elseif(auth()->user()->isCidadao() && $requisicao->temReview())
+                            @elseif(auth()->user()->isCidadao() && $requisicao->status === 'devolvida' && $requisicao->temReview())
                                 <td class="p-2 border">
                                     <span class="text-sm text-gray-500">Review feito</span>
                                 </td>
