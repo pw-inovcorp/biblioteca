@@ -72,6 +72,11 @@ class Livro extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function carrinhoItems()
+    {
+        return $this->hasMany(CarrinhoItem::class);
+    }
+
     public function alertas()
     {
         return $this->hasMany(LivroAlerta::class);
@@ -95,6 +100,17 @@ class Livro extends Model
     public function requisicaoAtiva(): ?Requisicao
     {
         return $this->requisicoes()->ativas()->first();
+    }
+
+    //Métodos para carrinho
+    public function hasStock(int $quantidade = 1): bool
+    {
+        return $this->stock >= $quantidade;
+    }
+
+    public function canAdicionarAoCarrinho(int $quantidade = 1): bool
+    {
+        return $this->hasStock($quantidade);
     }
 
 

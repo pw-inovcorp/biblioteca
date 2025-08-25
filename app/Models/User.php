@@ -98,6 +98,11 @@ class User extends Authenticatable
         return $this->hasMany(LivroAlerta::class);
     }
 
+    public function carrinhoItems()
+    {
+        return $this->hasMany(CarrinhoItem::class);
+    }
+
     //Permissões
     public function isAdmin(): bool
     {
@@ -120,6 +125,23 @@ class User extends Authenticatable
     public function requisicoesAtivas() : Builder
     {
         return $this->requisicoes()->ativas();
+    }
+
+
+    //Metodos para carrinho
+    public function hasItensNoCarrinho(): bool
+    {
+        return $this->carrinhoItems()->exists();
+    }
+
+    public function calcTotalCarrinho(): float
+    {
+        return $this->carrinhoItems()->get()->sum(fn($item) => $item->calcSubTotal());
+    }
+
+    public function countItensCarrinho(): int
+    {
+        return $this->carrinhoItems()->sum('quantidade');
     }
 
 
