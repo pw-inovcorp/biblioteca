@@ -80,6 +80,11 @@
                             @endif
                         </div>
 
+                        <div>
+                            <strong class="text-gray-700">Stock:</strong>
+                            <span class="text-gray-900">{{ $livro->stock }} </span>
+                        </div>
+
                         @if(!empty($livro->google_books_id))
                             <div>
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
@@ -142,6 +147,25 @@
                                     Editar Livro
                                 </a>
                             @endif
+                        @endif
+                    </div>
+                    <div class="mt-6">
+                        {{-- Botão Adicionar ao Carrinho --}}
+                        @if($livro->canAdicionarAoCarrinho())
+                            <form method="POST" action="{{ route('carrinho.store') }}" class="inline">
+                                @csrf
+                                <input type="hidden" name="livro_id" value="{{ $livro->id }}">
+                                <input type="number" name="quantidade" value="1" min="1" max="{{ $livro->stock }}"
+                                       class="border rounded px-2 py-1 w-16 text-center">
+                                <button type="submit"
+                                        class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600">
+                                    Adicionar ao Carrinho
+                                </button>
+                            </form>
+                        @elseif($livro->stock <= 0)
+                            <span class="bg-gray-500 text-white px-4 py-2 rounded opacity-75 cursor-not-allowed">
+                                        Sem Stock
+                                    </span>
                         @endif
                     </div>
                 </div>

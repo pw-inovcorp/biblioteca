@@ -41,6 +41,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/alertas', [LivroAlertaController::class, 'store'])->name('alertas.store');
 
+
+    Route::get('/carrinho', [App\Http\Controllers\CarrinhoController::class, 'index'])->name('carrinho.index');
+    Route::post('/carrinho', [App\Http\Controllers\CarrinhoController::class, 'store'])->name('carrinho.store');
+
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {
