@@ -101,5 +101,11 @@ class CarrinhoController extends Controller
     public function destroy($id)
     {
         //
+        $item = CarrinhoItem::where('user_id', auth()->id())
+            ->findOrFail($id);
+
+        $item->delete();
+
+        return back()->with('success', 'Item removido do carrinho!');
     }
 }

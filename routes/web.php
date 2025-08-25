@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/carrinho', [App\Http\Controllers\CarrinhoController::class, 'index'])->name('carrinho.index');
     Route::post('/carrinho', [App\Http\Controllers\CarrinhoController::class, 'store'])->name('carrinho.store');
+    Route::delete('/carrinho/{id}', [App\Http\Controllers\CarrinhoController::class, 'destroy'])->name('carrinho.destroy');
 
 });
 
