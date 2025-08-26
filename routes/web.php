@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/carrinho', [App\Http\Controllers\CarrinhoController::class, 'store'])->name('carrinho.store');
     Route::delete('/carrinho/{id}', [App\Http\Controllers\CarrinhoController::class, 'destroy'])->name('carrinho.destroy');
 
+    Route::get('/encomendas', [\App\Http\Controllers\EncomendaController::class, 'index'])->name('encomendas.index');
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {

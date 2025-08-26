@@ -103,6 +103,11 @@ class User extends Authenticatable
         return $this->hasMany(CarrinhoItem::class);
     }
 
+    public function encomendas()
+    {
+        return $this->hasMany(Encomenda::class);
+    }
+
     //Permissões
     public function isAdmin(): bool
     {
@@ -142,6 +147,21 @@ class User extends Authenticatable
     public function countItensCarrinho(): int
     {
         return $this->carrinhoItems()->sum('quantidade');
+    }
+
+    public function hasEncomendas(): bool
+    {
+        return $this->encomendas()->exists();
+    }
+
+    public function encomendasPendentes()
+    {
+        return $this->encomendas()->where('status', 'pendente');
+    }
+
+    public function encomendasPagas()
+    {
+        return $this->encomendas()->where('status', 'paga');
     }
 
 
