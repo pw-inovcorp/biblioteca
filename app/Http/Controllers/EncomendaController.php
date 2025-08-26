@@ -13,11 +13,19 @@ class EncomendaController extends Controller
     public function index()
     {
         //
-        $encomendas = auth()->user()->encomendas()
-            ->with('items.livro')
-            ->orderByDesc('created_at', 'desc')
-            ->simplePaginate(10);
+        $user = auth()->user();
 
+        if ($user->isAdmin()) {
+            $encomendas = Encomenda::with(['user', 'items.livro'])
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+        } else {
+
+            $encomendas = auth()->user()->encomendas()
+                ->with('items.livro')
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+        }
         return view('encomendas/index', ['encomendas' => $encomendas]);
     }
 
