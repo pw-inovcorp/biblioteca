@@ -48,7 +48,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/encomendas', [\App\Http\Controllers\EncomendaController::class, 'index'])->name('encomendas.index');
 
-
+    Route::get('/checkout/morada', [\App\Http\Controllers\CheckoutController::class, 'morada'])->name('checkout.morada');
+    Route::post('/checkout/morada', [App\Http\Controllers\CheckoutController::class, 'storeMorada'])->name('checkout.morada');
+    Route::get('/checkout/confirmacao', [App\Http\Controllers\CheckoutController::class, 'confirmacao'])->name('checkout.confirmacao');
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {

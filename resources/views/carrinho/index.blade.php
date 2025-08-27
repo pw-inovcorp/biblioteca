@@ -88,9 +88,10 @@
                                class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-medium">
                                 Continuar Comprando
                             </a>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">
+                            <a href="{{ route('checkout.morada') }}"
+                               class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">
                                 Finalizar Compra
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
