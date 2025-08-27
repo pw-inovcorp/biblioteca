@@ -47,10 +47,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/carrinho/{id}', [App\Http\Controllers\CarrinhoController::class, 'destroy'])->name('carrinho.destroy');
 
     Route::get('/encomendas', [\App\Http\Controllers\EncomendaController::class, 'index'])->name('encomendas.index');
+    Route::get('/encomendas/{id}', [App\Http\Controllers\EncomendaController::class, 'show'])->name('encomendas.show');
 
     Route::get('/checkout/morada', [\App\Http\Controllers\CheckoutController::class, 'morada'])->name('checkout.morada');
     Route::post('/checkout/morada', [App\Http\Controllers\CheckoutController::class, 'storeMorada'])->name('checkout.morada');
     Route::get('/checkout/confirmacao', [App\Http\Controllers\CheckoutController::class, 'confirmacao'])->name('checkout.confirmacao');
+    Route::post('/checkout/confirmacao', [App\Http\Controllers\CheckoutController::class, 'finalizar'])->name('checkout.finalizar');
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {

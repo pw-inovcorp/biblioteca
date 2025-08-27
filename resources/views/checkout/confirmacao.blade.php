@@ -59,6 +59,15 @@
                 <a href="{{ route('checkout.morada') }}" class="bg-gray-500 text-white px-4 py-2 rounded">
                     Voltar
                 </a>
+
+                <form method="POST" action="{{ route('checkout.finalizar') }}">
+                    @csrf
+                    <button type="submit"
+                            class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold"
+                            onclick="return confirm('Confirma a criação desta encomenda?')">
+                        Confirmar Encomenda
+                    </button>
+                </form>
             </div>
         </div>
     </div>

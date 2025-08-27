@@ -48,9 +48,17 @@ class EncomendaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Encomenda $encomenda)
+    public function show($id)
     {
         //
+        $encomenda = Encomenda::with(['items.livro', 'user'])->findOrFail($id);
+
+        if (!auth()->user()->isAdmin() && $encomenda->user_id !== auth()->id()) {
+            abort(403, 'Não tem permissão para ver esta encomenda.');
+        }
+
+        return view('encomendas.show', ['encomenda' => $encomenda]);
+
     }
 
     /**

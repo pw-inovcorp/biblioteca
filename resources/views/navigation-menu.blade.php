@@ -47,6 +47,10 @@
                             {{ __('Reviews') }}
                         </x-nav-link>
                     @endif
+                    <x-nav-link href="{{ route('encomendas.index') }}" :active="request()->is('encomendas')">
+                        {{ __('Encomendas') }}
+                    </x-nav-link>
+
                 </div>
 
             </div>

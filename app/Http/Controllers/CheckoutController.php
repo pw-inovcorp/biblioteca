@@ -62,7 +62,56 @@ class CheckoutController extends Controller
         return view('checkout/confirmacao', ['items' => $items, 'total' => $total, 'morada' => $morada]);
     }
 
+    public function finalizar()
+    {
+        $user = auth()->user();
 
+        $redirect = $this->validarCheckout();
+        if ($redirect !== null) {
+            return $redirect;
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $items = $user->carrinhoItems()->with('livro')->get();
+            $total = $user->calcTotalCarrinho();
+            $morada = session('checkout_morada');
+
+            $encomenda = Encomenda::create([
+                'user_id' => $user->id,
+                'numero_encomenda' => Encomenda::gerarNumeroEncomenda(),
+                'status' => 'pendente',
+                'total' => $total,
+                'morada_entrega' => $morada,
+            ]);
+
+            foreach ($items as $item) {
+                EncomendaItem::create([
+                    'encomenda_id' => $encomenda->id,
+                    'livro_id' => $item->livro_id,
+                    'quantidade' => $item->quantidade,
+                    'preco_unitario' => $item->livro->price,
+                    'subtotal' => $item->calcSubTotal(),
+                ]);
+            }
+
+            $user->carrinhoItems()->delete();
+
+            session()->forget('checkout_morada');
+
+            DB::commit();
+            return redirect()->route('encomendas.show', $encomenda)
+                ->with('success', 'Encomenda criada com sucesso! Número: ' . $encomenda->numero_encomenda);
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return redirect()->route('checkout.confirmacao')
+                ->with('error', 'Erro ao criar encomenda. Tente novamente.');
+        }
+
+    }
 
     private function validarCheckout()
     {

@@ -29,7 +29,12 @@
                         <tbody>
                         @foreach($encomendas as $encomenda)
                             <tr class="border-b hover:bg-gray-50">
-                                <td class="px-6 py-4 border-r">{{ $encomenda->numero_encomenda }}</td>
+                                <td class="border-r p-0">
+                                    <a href="{{route('encomendas.show', $encomenda->id)}}"
+                                       class="block px-6 py-4 text-blue-600 underline">
+                                        {{ $encomenda->numero_encomenda }}
+                                    </a>
+                                </td>
 
                                 @if(auth()->user()->isAdmin())
                                     <td class="px-6 py-4 border-r">
