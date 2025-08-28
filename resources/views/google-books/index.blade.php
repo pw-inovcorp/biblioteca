@@ -95,6 +95,10 @@
                             <input type="hidden" name="thumbnail" value="{{ $book['thumbnail'] }}">
                             <input type="hidden" name="isbn" value="{{ $book['isbn'] }}">
 
+                            <input type="hidden" name="original_query" value="{{ $query }}">
+                            <input type="hidden" name="original_page" value="{{ $page }}">
+
+
                             <button type="submit"
                                     class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
                                     onclick="return confirm('Importar este livro para a biblioteca?')">

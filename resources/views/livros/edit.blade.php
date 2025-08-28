@@ -5,7 +5,7 @@
             {{ __('Editar Livro') }}
         </h2>
     </x-slot>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <form method="POST" action="/livros/{{ $livro->id }}" enctype="multipart/form-data">
@@ -146,8 +146,21 @@
                                 <p class="mt-4 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+                    </div>
 
-                </div>  
+                    <div class="sm:col-span-4">
+                        <label for="stock" class="block text-sm font-medium leading-6 text-gray-900">Stock</label>
+                        <div class="mt-2">
+                            <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="number" name="stock" id="stock" min="0"
+                                       class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                       placeholder="10" value="{{ old('stock', isset($livro) ? $livro->stock : 0) }}" required>
+                            </div>
+                            @error('stock')
+                            <p class="mt-4 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
             </div>
         </div>
 
@@ -155,7 +168,7 @@
             <div class="flex items-center">
                 <button class="text-red-500 text-sm font-bold" form="delete-editor-form">Apagar</button>
             </div>
-            
+
             <div class="mt-6 flex items-center justify-end gap-x-6">
                 <a href="/editoras" type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancelar</a>
                 <button type="submit"

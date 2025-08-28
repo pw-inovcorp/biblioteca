@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use App\Models\Encomenda;
+use Mail;
+use App\Mail\PagamentoConfirmadoMail;
 
 class StripeController extends Controller
 {
@@ -101,6 +103,7 @@ class StripeController extends Controller
                 }
 
                 // Enviar email
+                Mail::to($encomenda->user->email)->send(new PagamentoConfirmadoMail($encomenda));
 
                 return redirect()->route('encomendas.show', $encomenda)
                     ->with('success', 'Pagamento realizado com sucesso! Encomenda: ' . $encomenda->numero_encomenda);

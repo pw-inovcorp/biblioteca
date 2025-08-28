@@ -49,7 +49,8 @@ class Livro extends Model
         'bibliography',
         'image',
         'price',
-        'google_books_id'
+        'google_books_id',
+        'stock'
     ];
 
     //Relações

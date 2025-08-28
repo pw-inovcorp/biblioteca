@@ -53,7 +53,8 @@ class LivroController extends Controller
             'autores.*' => 'exists:autores,id',
             'bibliography' => 'required|string|max:2000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0'
         ]);
 
         if (request()->hasFile('image')) {
@@ -90,7 +91,8 @@ class LivroController extends Controller
             'autores.*' => 'exists:autores,id',
             'bibliography' => 'required|string|max:2000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0'
         ]);
 
         if(request()->hasFile('image')) {

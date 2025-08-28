@@ -136,7 +136,7 @@ class GoogleBooksController extends Controller
                 'bibliography' => request('description') ?? 'Descrição não disponível.',
                 'image' => request('thumbnail'),
                 'price' => 0,
-
+                'stock' => 0
             ]);
 
             //Criar/Associar autores
