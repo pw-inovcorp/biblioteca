@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\ReminderDevolucaoMail;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 use App\Models\Requisicao;
@@ -41,7 +42,7 @@ class EnviarReminderDevolucao extends Command
 
         foreach ($requisicoes as $requisicao) {
             try {
-                Mail::to($requisicao->user->email)->send(new LembreteDevolucaoMail($requisicao));
+                Mail::to($requisicao->user->email)->send(new ReminderDevolucaoMail($requisicao));
                 $this->info("Lembrete enviado para: {$requisicao->user->email} - Requisição: {$requisicao->numero_requisicao}");
             } catch (\Exception $e) {
                 $this->error("Erro ao enviar para {$requisicao->user->email}: " . $e->getMessage());

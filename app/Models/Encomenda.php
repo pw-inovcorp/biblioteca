@@ -13,7 +13,9 @@ class Encomenda extends Model
         'status',
         'total',
         'morada_entrega',
-        'data_pagamento'
+        'data_pagamento',
+        'stripe_session_id',
+        'stripe_payment_intent_id'
     ];
 
     protected $casts = [

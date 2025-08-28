@@ -6,10 +6,19 @@
     </x-slot>
 
     @if(session('success'))
-        <div class="max-w-4xl mx-auto mb-4 p-2 bg-green-100 text-green-700 rounded">
+        <div class="max-w-4xl mx-auto mb-4 p-2 border bg-green-100 text-green-700 rounded">
             {{ session('success') }}
         </div>
     @endif
+
+    @if(session('error'))
+        <div class="max-w-4xl mx-auto mb-4 p-2 border bg-red-100 text-red-600 rounded">
+            {{ session('error') }}
+        </div>
+    @endif
+
+
+
 
     <div class="max-w-4xl mx-auto py-4">
         <div class="bg-white shadow rounded p-4 mb-4">
@@ -89,9 +98,23 @@
 
         <div class="bg-white shadow rounded p-4">
             <div class="flex justify-between items-center">
-                <a href="{{ route('encomendas.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded">Voltar</a>
+                <a href="{{ route('encomendas.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded">
+                    Voltar
+                </a>
+
                 @if($encomenda->status === 'pendente')
-                    <span class="text-sm text-gray-600">Aguardando pagamento...</span>
+                    <div class="text-right">
+                        <form method="POST" action="{{ route('stripe.checkout', $encomenda->id) }}" class="inline">
+                            @csrf
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded font-medium">
+                                Pagar
+                            </button>
+                        </form>
+                    </div>
+                @elseif($encomenda->status === 'paga')
+                    <div class="text-right">
+                        <span class="text-green-600 font-medium">Pago em {{ $encomenda->data_pagamento->format('d/m/Y') }}</span>
+                    </div>
                 @endif
             </div>
         </div>

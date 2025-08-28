@@ -53,6 +53,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout/morada', [App\Http\Controllers\CheckoutController::class, 'storeMorada'])->name('checkout.morada');
     Route::get('/checkout/confirmacao', [App\Http\Controllers\CheckoutController::class, 'confirmacao'])->name('checkout.confirmacao');
     Route::post('/checkout/confirmacao', [App\Http\Controllers\CheckoutController::class, 'finalizar'])->name('checkout.finalizar');
+
+    Route::post('/encomendas/{encomenda}/checkout', [App\Http\Controllers\StripeController::class, 'checkout'])->name('stripe.checkout');
+    Route::get('/encomendas/{encomenda}/payment-success', [App\Http\Controllers\StripeController::class, 'success'])->name('stripe.success');
+    Route::get('/encomendas/{encomenda}/payment-cancel', [App\Http\Controllers\StripeController::class, 'cancel'])->name('stripe.cancel');
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {
