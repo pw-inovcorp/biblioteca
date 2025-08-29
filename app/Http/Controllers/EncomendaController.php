@@ -29,6 +29,21 @@ class EncomendaController extends Controller
         return view('encomendas/index', ['encomendas' => $encomendas]);
     }
 
+    public function search()
+    {
+        $search = request()->query('search', '');
+
+        $encomendas = Encomenda::with('user')
+            ->where('numero_encomenda', 'like', "%{$search}%")
+            ->orWhere('status', 'like', "%{$search}%")
+            ->orWhereHas('user', fn($q) => $q->where('name', 'like', "%{$search}%"))
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('encomendas.index', ['encomendas' => $encomendas]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

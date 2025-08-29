@@ -65,7 +65,7 @@
 
                     <!-- Contador -->
                     @if(auth()->check() && auth()->user()->hasItensNoCarrinho())
-                        <span class="bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full flex items-center justify-center h-4 w-4">
                             {{ auth()->user()->countItensCarrinho() }}
                         </span>
                     @endif

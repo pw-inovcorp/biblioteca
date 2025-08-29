@@ -63,6 +63,8 @@ Route::middleware(['auth', 'admin'])->group(function() {
 
     // Admin CRUD
 
+    Route::get('/encomendas/search', [App\Http\Controllers\EncomendaController::class, 'search'])->name('encomendas.search');
+
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
     Route::get('/reviews/show/{id}', [ReviewController::class, 'show'])->name('reviews.show');
     Route::patch('/reviews/{id}/aprovar', [ReviewController::class, 'aprovar'])->name('reviews.aprovar');

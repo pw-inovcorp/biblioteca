@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    {{--Barra de pesquisa--}}
+
     <form action="{{ route('reviews.search') }}" method="GET">
         <div class="text-center">
             <input type="search" name="search" class="mr-sm-2" value="{{ $search ?? '' }}">

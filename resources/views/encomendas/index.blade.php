@@ -9,6 +9,17 @@
         </h2>
     </x-slot>
 
+    @if(auth()->user()->isAdmin())
+        <form action="{{ route('encomendas.search') }}" method="GET">
+            <div class="text-center">
+                <input type="search" name="search" class="mr-sm-2" value="{{ $search ?? '' }}">
+                <button type="submit" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                    Pesquisar
+                </button>
+            </div>
+        </form>
+    @endif
+
     <div class="max-w-7xl mx-auto py-6 px-4">
         @if($encomendas->count() > 0)
             <div class="bg-white rounded-lg shadow overflow-hidden border">
@@ -63,10 +74,6 @@
                         </tbody>
                     </table>
                 </div>
-
-                <div class="bg-white px-4 py-3 border-t border-gray-200">
-                    {{ $encomendas->links() }}
-                </div>
             </div>
         @else
             <div class="bg-white rounded-lg shadow p-12 text-center">
@@ -83,5 +90,8 @@
                 @endif
             </div>
         @endif
+    </div>
+    <div class="mt-6">
+        {{ $encomendas->links() }}
     </div>
 </x-app-layout>

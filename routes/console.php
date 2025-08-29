@@ -19,3 +19,8 @@ Schedule::call(function () {
         ->where('data_prevista_entrega', '<', now())
         ->update(['status' => 'atrasada']);
 })->dailyAt('00:01')->name('atualizar-requisicoes-atrasadas');
+
+// Executar de hora em hora
+Schedule::command('app:enviar-carrinho-abandonado')
+    ->everyMinute()
+    ->appendOutputTo(storage_path('logs/carrinho-abandonado.log'));
