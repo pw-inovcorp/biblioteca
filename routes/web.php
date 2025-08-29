@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/carrinho/{id}', [App\Http\Controllers\CarrinhoController::class, 'destroy'])->name('carrinho.destroy');
 
     Route::get('/encomendas', [\App\Http\Controllers\EncomendaController::class, 'index'])->name('encomendas.index');
+    Route::get('/encomendas/search', [App\Http\Controllers\EncomendaController::class, 'search'])->name('encomendas.search');
     Route::get('/encomendas/{id}', [App\Http\Controllers\EncomendaController::class, 'show'])->name('encomendas.show');
 
     Route::get('/checkout/morada', [\App\Http\Controllers\CheckoutController::class, 'morada'])->name('checkout.morada');
@@ -63,7 +64,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
 
     // Admin CRUD
 
-    Route::get('/encomendas/search', [App\Http\Controllers\EncomendaController::class, 'search'])->name('encomendas.search');
+
 
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
     Route::get('/reviews/show/{id}', [ReviewController::class, 'show'])->name('reviews.show');
