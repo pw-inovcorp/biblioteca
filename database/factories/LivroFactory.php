@@ -26,4 +26,14 @@ class LivroFactory extends Factory
             'price' => $this->faker->numberBetween(10, 151)
         ];
     }
+
+    public function semStock()
+    {
+        return $this->state(['stock' => 0]);
+    }
+
+    public function comStock($quantidade)
+    {
+        return $this->state(['stock' => $quantidade]);
+    }
 }

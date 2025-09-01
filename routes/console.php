@@ -22,5 +22,5 @@ Schedule::call(function () {
 
 // Executar de hora em hora
 Schedule::command('app:enviar-carrinho-abandonado')
-    ->everyMinute()
+    ->everyTenMinutes()
     ->appendOutputTo(storage_path('logs/carrinho-abandonado.log'));

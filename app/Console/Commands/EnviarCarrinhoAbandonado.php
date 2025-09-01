@@ -29,7 +29,7 @@ class EnviarCarrinhoAbandonado extends Command
     {
         //
         $users = User::whereHas('carrinhoItems', fn($q) =>
-        $q->where('created_at', '<=', now()->subMinutes(1)))
+        $q->where('created_at', '<=', now()->subHour()))
         ->with('carrinhoItems')
         ->get();
 

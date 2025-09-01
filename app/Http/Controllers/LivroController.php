@@ -106,12 +106,19 @@ class LivroController extends Controller
         $livro->autores()->sync($data['autores']);
         $livro->update($data);
 
+        //Teste em Logs
+        \App\Models\SystemLog::criarLog('livros', "Livro atualizado: {$livro->name}", $livro->id);
+
         return redirect('/livros');
     }
 
     public function destroy($id) {
         $livro = Livro::findOrFail($id);
         $livro->delete();
+
+
+        //Teste em Logs
+        \App\Models\SystemLog::criarLog('livros', "Livro removido: {$livro->name}", $livro->id);
 
         return redirect('/livros');
     }

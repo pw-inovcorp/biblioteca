@@ -38,6 +38,10 @@
                         {{ __('Editoras') }}
                     </x-nav-link>
 
+                    <x-nav-link href="{{ route('encomendas.index') }}" :active="request()->is('encomendas')">
+                        {{ __('Encomendas') }}
+                    </x-nav-link>
+
                     @if(auth()->user()->isAdmin())
                         <x-nav-link href="{{ url('/google-books') }}" :active="request()->is('google-books')">
                             {{ __('Importar') }}
@@ -46,10 +50,11 @@
                         <x-nav-link href="{{ route('reviews.index') }}" :active="request()->is('reviews')">
                             {{ __('Reviews') }}
                         </x-nav-link>
+
+                        <x-nav-link href="{{ route('logs.index') }}" :active="request()->is('logs')">
+                            {{ __('Logs') }}
+                        </x-nav-link>
                     @endif
-                    <x-nav-link href="{{ route('encomendas.index') }}" :active="request()->is('encomendas')">
-                        {{ __('Encomendas') }}
-                    </x-nav-link>
 
                 </div>
 
