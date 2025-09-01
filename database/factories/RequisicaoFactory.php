@@ -42,7 +42,8 @@ class RequisicaoFactory extends Factory
             return [
                 'status' => 'devolvida',
                 'data_real_entrega' => $this->faker->dateTimeBetween($attributes['data_requisicao'], 'now'),
-                'dias_decorridos' => $this->faker->numberBetween(1, 10),
+                'dias_decorridos' => Carbon::parse($attributes['data_requisicao'])
+                    ->diffInDays($this->faker->dateTimeBetween($attributes['data_requisicao'], 'now'))
             ];
         });
     }

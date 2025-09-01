@@ -23,7 +23,8 @@ class LivroFactory extends Factory
             'editor_id' => \App\Models\Editor::factory(),
             'bibliography' => $this->faker->paragraph(),
             'image' => 'https://picsum.photos/640/480?random=' . rand(1, 1000),
-            'price' => $this->faker->numberBetween(10, 151)
+            'price' => $this->faker->numberBetween(10, 151),
+            'stock' => $this->faker->numberBetween(1, 50)
         ];
     }
 
