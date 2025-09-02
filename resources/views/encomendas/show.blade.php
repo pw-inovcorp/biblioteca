@@ -102,9 +102,9 @@
                     Voltar
                 </a>
 
-                @if($encomenda->status === 'pendente')
+                @if($encomenda->status === 'pendente' && auth()->id() === $encomenda->user_id)
                     <div class="text-right">
-                        <form method="POST" action="{{ route('stripe.checkout', $encomenda->id) }}" class="inline">
+                        <form method="POST" action="{{ route('stripe.checkout', $encomenda->id) }}">
                             @csrf
                             <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded font-medium">
                                 Pagar

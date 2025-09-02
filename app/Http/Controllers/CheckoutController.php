@@ -94,6 +94,12 @@ class CheckoutController extends Controller
                     'preco_unitario' => $item->livro->price,
                     'subtotal' => $item->calcSubTotal(),
                 ]);
+
+                \App\Models\SystemLog::criarLog(
+                    'encomendas',
+                    "Encomenda criada: {$encomenda->numero_encomenda} - Total: €{$total}",
+                    $encomenda->id
+                );
             }
 
             $user->carrinhoItems()->delete();

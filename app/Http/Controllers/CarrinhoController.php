@@ -66,6 +66,12 @@ class CarrinhoController extends Controller
                 'livro_id' => $livro->id,
                 'quantidade' => $quantidade
             ]);
+
+            \App\Models\SystemLog::criarLog(
+                'carrinho',
+                "Livro adicionado ao carrinho: '{$livro->name}' (Qtd: {$quantidade})",
+                $livro->id
+            );
         }
 
         return back()->with('success', 'Livro adicionado ao carrinho!');
@@ -105,6 +111,12 @@ class CarrinhoController extends Controller
             ->findOrFail($id);
 
         $item->delete();
+
+        \App\Models\SystemLog::criarLog(
+            'carrinho',
+            "Livro removido do carrinho: '{$item->livro->name}'",
+            $item->livro_id
+        );
 
         return back()->with('success', 'Item removido do carrinho!');
     }

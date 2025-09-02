@@ -98,6 +98,12 @@ class RequisicaoController extends Controller
             'status' => 'ativa'
         ]);
 
+        \App\Models\SystemLog::criarLog(
+            'requisicoes',
+            "Requisição criada: {$requisicao->numero_requisicao} para o livro '{$livro->name}'",
+            $requisicao->id
+        );
+
         // TODO: Enviar email para admin e cidadão
         // Enviar email para o cidadão
         Mail::to($requisicao->user->email)->send(new NovaRequisicaoMail($requisicao));
@@ -131,6 +137,12 @@ class RequisicaoController extends Controller
         $requisicao->data_real_entrega = Carbon::today();
         $requisicao->dias_decorridos = $requisicao->calcularDiasDecorridos();
         $requisicao->save();
+
+        \App\Models\SystemLog::criarLog(
+            'requisicoes',
+            "Livro devolvido: {$requisicao->numero_requisicao} - '{$requisicao->livro->name}'",
+            $requisicao->id
+        );
 
         //Envio de email para alertar a disponibilidade do livro
         $alertas = $requisicao->livro->alertas()->with('user')->get();
