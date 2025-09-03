@@ -21,7 +21,9 @@
                 <th class="px-4 py-3 border-r">Módulo</th>
                 <th class="px-4 py-3 border-r">ID Objeto</th>
                 <th class="px-4 py-3 border-r">Alteração</th>
+                <th class="px-4 py-3 border-r">Browser</th>
                 <th class="px-4 py-3 border-r">IP</th>
+                <th class="px-4 py-3 border-r">Ações</th>
             </tr>
             </thead>
             <tbody>
@@ -32,7 +34,14 @@
                     <td class="px-4 py-3 border-r">{{ $log->modulo }}</td>
                     <td class="px-4 py-3 border-r">{{ $log->objeto_id ?? '-' }}</td>
                     <td class="px-4 py-3 border-r">{{ $log->alteracao }}</td>
+                    <td class="px-4 py-3 border-r">{{ Str::limit($log->browser, 30) }}</td>
                     <td class="px-4 py-3 border-r">{{ $log->ip_address }}</td>
+                    <td class="px-4 py-3 border-r">
+                        <a href="{{ route('logs.show', $log->id) }}"
+                           class="text-blue-600 hover:text-blue-800 underline text-sm">
+                            Ver Detalhes
+                        </a>
+                    </td>
                 </tr>
             @empty
                 <tr>

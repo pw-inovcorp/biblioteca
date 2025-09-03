@@ -17,6 +17,12 @@ class SystemLogController extends Controller
         return view('/logs/index', ['logs' => $logs]);
     }
 
+    public function show($id)
+    {
+        $log = SystemLog::with('user')->findOrFail($id);
+        return view('/logs/show', ['log' => $log]);
+    }
+
     public function search() {
         $search = request()->query('search','');
         $logs = SystemLog::with('user')
