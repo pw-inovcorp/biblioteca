@@ -32,6 +32,12 @@ class AutorController extends Controller
 
         \App\Models\Autor::create($data);
 
+        \App\Models\SystemLog::criarLog(
+            'autores',
+            "Autor criado: {$data['name']}",
+            $data->id
+        );
+
         return redirect('/autores');
     }
 
@@ -61,6 +67,12 @@ class AutorController extends Controller
 
         $autor->update($data);
 
+        \App\Models\SystemLog::criarLog(
+            'autores',
+            "Autor atualizado: {$autor->name}",
+            $autor->id
+        );
+
         return redirect('/autores');
     }
 
@@ -68,6 +80,12 @@ class AutorController extends Controller
     {
         $autor = \App\Models\Autor::findOrFail($id);
         $autor->delete();
+
+        \App\Models\SystemLog::criarLog(
+            'autores',
+            "Autor eliminado: {$autor->name}",
+            $id
+        );
 
         return redirect('/autores');
     }

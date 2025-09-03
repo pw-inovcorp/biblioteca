@@ -32,6 +32,12 @@ class EditorController extends Controller
 
         \App\Models\Editor::create($data);
 
+        \App\Models\SystemLog::criarLog(
+            'editoras',
+            "Editora criada: {$data['name']}",
+            $data->id
+        );
+
         return redirect('/editoras');
     }
 
@@ -63,6 +69,12 @@ class EditorController extends Controller
         // Update
         $editora->update($data);
 
+        \App\Models\SystemLog::criarLog(
+            'editoras',
+            "Editora atualizada: {$editora->name}",
+            $id
+        );
+
         // Redirect
         return redirect('/editoras');
     }
@@ -77,6 +89,12 @@ class EditorController extends Controller
 
         // Delete the editor
         $editora->delete();
+
+        \App\Models\SystemLog::criarLog(
+            'editoras',
+            "Editora eliminada: {$editora->name}",
+            $id
+        );
 
         // Redirect back to the editoras
         return redirect('/editoras');

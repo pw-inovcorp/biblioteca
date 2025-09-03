@@ -65,6 +65,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
     // Admin CRUD
 
     Route::get('/logs', [App\Http\Controllers\SystemLogController::class, 'index'])->name('logs.index');
+    Route::get('/logs/search', [App\Http\Controllers\SystemLogController::class, 'search'])->name('logs.search');
 
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
     Route::get('/reviews/show/{id}', [ReviewController::class, 'show'])->name('reviews.show');

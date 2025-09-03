@@ -5,6 +5,13 @@
         </h2>
     </x-slot>
 
+    <form action="{{ route('logs.search') }}" method="GET" class="mb-6">
+        <div class="text-center">
+            <input type="search" name="search" class="mr-sm-2" value="{{ $search ?? '' }}" placeholder="Nome">
+            <button type="submit" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Pesquisar</button>
+        </div>
+    </form>
+
     <div class="bg-white rounded-lg shadow overflow-x-auto">
         <table class="w-full ">
             <thead class="bg-gray-50">

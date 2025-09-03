@@ -16,4 +16,18 @@ class SystemLogController extends Controller
 
         return view('/logs/index', ['logs' => $logs]);
     }
+
+    public function search() {
+        $search = request()->query('search','');
+        $logs = SystemLog::with('user')
+            ->where('alteracao', 'LIKE', "%{$search}%")
+            ->orWhere('modulo', 'LIKE', "%{$search}%")
+            ->orWhere('data_hora', 'LIKE', "%{$search}%")
+            ->orWhereHas('user', fn($q) => $q->where('name', 'LIKE', "%{$search}%"))
+            ->orderBy('created_at', 'desc')
+            ->simplePaginate(10)
+            ->withQueryString();
+
+        return view('logs/index', ['logs' => $logs]);
+    }
 }
